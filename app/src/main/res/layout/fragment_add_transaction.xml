@@ -42,18 +42,34 @@
         android:id="@+id/transactionNotesEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:hint="Notes"
         android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/transactionCategoryEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/transactionCategoryEditText" />
+
+    <EditText
+        android:id="@+id/transactionBudget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="Budget"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transactionCategoryEditText" />
 
     <Button
         android:id="@+id/saveTransactionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:text="Save Transaction"
-        app:layout_constraintTop_toBottomOf="@id/transactionNotesEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/transactionNotesEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

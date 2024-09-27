@@ -9,8 +9,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/budgetRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_width="405dp"
+        android:layout_height="441dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,13 +19,15 @@
     <ProgressBar
         android:id="@+id/savingsGoalProgressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="0dp"
-        android:minHeight="40dp"
-        android:layout_height="wrap_content"
-        android:progress="50"
+        android:layout_width="390dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="12dp"
         android:max="100"
-        app:layout_constraintTop_toBottomOf="@id/budgetRecyclerView"
+        android:minHeight="40dp"
+        android:progress="50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/budgetRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
