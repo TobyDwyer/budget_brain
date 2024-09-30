@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import java.util.Date
 
@@ -46,6 +47,9 @@ interface ApiService {
 
     @POST("auth/user")
     fun user(): Call<UserResponse>
+
+    @PUT("budgets/{id}")
+    fun updateBudget(@Path("id") budgetId: String, @Body budget: BudgetDetails): Call<BudgetDetailResponse>
 
     // -------- BUDGETS ---------
     @POST("budgets")
