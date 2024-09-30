@@ -2,11 +2,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 
 class ApiClient(private val token: String?) {
 
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:2323/api/"
+        private const val BASE_URL = "http://budget-brain.eba-t2pzfdsb.eu-north-1.elasticbeanstalk.com/api/"
     }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -14,6 +15,9 @@ class ApiClient(private val token: String?) {
     }
 
     private val httpClient: OkHttpClient = OkHttpClient.Builder()
+        .callTimeout(5, TimeUnit.MINUTES)
+        .readTimeout(5, TimeUnit.MINUTES)
+        .writeTimeout(5, TimeUnit.MINUTES)
         .addInterceptor(loggingInterceptor)
         .addInterceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
@@ -26,6 +30,7 @@ class ApiClient(private val token: String?) {
 
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
+
         .addConverterFactory(GsonConverterFactory.create())
         .client(httpClient)
         .build()
