@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 class ApiClient(private val token: String?) {
 
     companion object {
-        private const val BASE_URL = "http://localhost:5000/"
+        private const val BASE_URL = "http://localhost:2323/"
     }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
