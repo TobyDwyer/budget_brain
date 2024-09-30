@@ -2,6 +2,7 @@
 agp = "8.6.1"
 androidxCredentialsCredentials = "<latest version>"
 converterGson = "2.9.0"
+firebaseBom = "33.3.0"
 googleid = "<latest version>"
 kotlin = "1.9.0"
 coreKtx = "1.10.1"
@@ -24,6 +25,8 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-credentials-credentials2 = { module = "androidx.credentials:credentials", version.ref = "androidxCredentialsCredentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidxCredentialsCredentials" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
