@@ -12,8 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.fragment.findNavController
 import com.example.budgetbrain.databinding.FragmentRegisterBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,6 +77,7 @@ class RegisterFragment : Fragment() {
                     languagePreference = languagePreference,
                     savingsGoal = savingsGoal
                 )
+
 
                  ApiClient(null).apiService.register(request).enqueue(object : Callback<RegisterResponse> {
                      override fun onResponse(

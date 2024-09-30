@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "515869063410",
+    "project_id": "budgetbrain-58848",
+    "storage_bucket": "budgetbrain-58848.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515869063410:android:b858c8e2b6e09f96f2386b",
+        "android_client_info": {
+          "package_name": "com.example.budgetbrain"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1mn2EQcf_TGVtr3sU4HqmVAoxv_-s1go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
