@@ -31,6 +31,7 @@ data class BudgetCreateRequest(
     val categories: List<String> = emptyList(),
 )
 data class BudgetCreateResponse( val budget : BudgetItem)
+data class BudgetListResponse( val budgets : List<BudgetItem>)
 
 
 interface ApiService {
@@ -47,6 +48,9 @@ interface ApiService {
     // -------- BUDGETS ---------
     @POST("budgets")
     fun budgetCreate(@Body budgetCreateRequest: BudgetCreateRequest): Call<BudgetCreateResponse>
+
+    @GET("budgets")
+    fun budgets(): Call<BudgetListResponse>
 }
 
 

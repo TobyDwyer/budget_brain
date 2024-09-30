@@ -33,7 +33,11 @@
         android:id="@+id/budgetsFragment"
         android:name="com.example.budgetbrain.BudgetFragment"
         android:label="Budgets"
-        tools:layout="@layout/fragment_budget" />
+        tools:layout="@layout/fragment_budget" >
+        <action
+            android:id="@+id/action_budgetsFragment_to_createBudgetFragment"
+            app:destination="@id/createBudgetFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/transactionsFragment"
@@ -50,5 +54,14 @@
     <action
         android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment" />
+    <fragment
+        android:id="@+id/createBudgetFragment"
+        android:name="com.example.budgetbrain.CreateBudgetFragment"
+        android:label="fragment_create_budget"
+        tools:layout="@layout/fragment_create_budget" >
+        <action
+            android:id="@+id/action_createBudgetFragment_to_budgetsFragment"
+            app:destination="@id/budgetsFragment" />
+    </fragment>
 
 </navigation>

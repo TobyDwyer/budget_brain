@@ -17,6 +17,7 @@ class SpendingAdapter(
             parent,
             false
         )
+
         return SpendingViewHolder(binding)
     }
 
