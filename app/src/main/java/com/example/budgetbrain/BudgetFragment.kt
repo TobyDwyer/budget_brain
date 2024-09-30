@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.budgetbrain.databinding.FragmentBudgetBinding
 
@@ -28,7 +29,10 @@ class BudgetFragment : Fragment() {
         // Set adapter for RecyclerView
 
         binding.addBudgetFab.setOnClickListener {
-            // Navigate to CreateBudgetFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, CreateBudgetFragment())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }
     }
 
