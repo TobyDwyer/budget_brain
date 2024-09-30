@@ -30,7 +30,6 @@ class BudgetDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // Set up RecyclerView with adapter
         spendingAdapter = SpendingAdapter(spendingList)
         binding.spendingRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -76,16 +75,26 @@ class BudgetDetailsFragment : Fragment() {
     }
 
     private fun enableFields(isEnabled: Boolean) {
-        binding.budgetNameTextView.isEnabled = isEnabled
-        binding.budgetAmountTextView.isEnabled = isEnabled
-        binding.totalAmountTextView.isEnabled = isEnabled
-        binding.remainingAmountTextView.isEnabled = isEnabled
-        binding.startDateTextView.isEnabled = isEnabled
-        binding.endDateTextView.isEnabled = isEnabled
+        // Make EditText fields editable or not
+        binding.budgetNameEditText.isEnabled = isEnabled
+        binding.budgetAmountEditText.isEnabled = isEnabled
+        binding.totalAmountEditText.isEnabled = isEnabled
+        binding.remainingAmountEditText.isEnabled = isEnabled
+        binding.startDateEditText.isEnabled = isEnabled
+        binding.endDateEditText.isEnabled = isEnabled
+
+        // Optionally change the alpha for visual feedback
+        val alpha = if (isEnabled) 1f else 0.5f
+        binding.budgetNameTextView.alpha = alpha
+        binding.budgetAmountTextView.alpha = alpha
+        binding.totalAmountTextView.alpha = alpha
+        binding.remainingAmountTextView.alpha = alpha
+        binding.startDateTextView.alpha = alpha
+        binding.endDateTextView.alpha = alpha
     }
 
     private fun saveBudgetDetails() {
-
+        // Implement your save logic here
     }
 
     override fun onDestroyView() {

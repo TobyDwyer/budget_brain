@@ -31,7 +31,17 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/budgetNameEditText"/>
+
+    <EditText
+        android:id="@+id/budgetNameEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/budgetNameTextView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintWidth_percent="0.6" />
 
     <!-- Budget Amount -->
     <TextView
@@ -42,7 +52,18 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/budgetNameTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/budgetAmountEditText"/>
+
+    <EditText
+        android:id="@+id/budgetAmountEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/budgetAmountTextView"
+        app:layout_constraintTop_toBottomOf="@id/budgetNameTextView"
+        app:layout_constraintWidth_percent="0.6" />
 
     <!-- Total Amount -->
     <TextView
@@ -53,7 +74,18 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/budgetAmountTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/totalAmountEditText"/>
+
+    <EditText
+        android:id="@+id/totalAmountEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textSize="14dp"
+        app:layout_constraintTop_toBottomOf="@id/budgetAmountTextView"
+        app:layout_constraintStart_toEndOf="@id/totalAmountTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
 
     <!-- Total Remaining -->
     <TextView
@@ -64,7 +96,18 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/totalAmountTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/remainingAmountEditText"/>
+
+    <EditText
+        android:id="@+id/remainingAmountEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textSize="14dp"
+        app:layout_constraintTop_toBottomOf="@id/totalAmountTextView"
+        app:layout_constraintStart_toEndOf="@id/remainingAmountTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
 
     <!-- Start Date -->
     <TextView
@@ -75,7 +118,17 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/remainingAmountTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/startDateEditText"/>
+
+    <EditText
+        android:id="@+id/startDateEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/startDateTextView"
+        app:layout_constraintTop_toBottomOf="@id/remainingAmountTextView"
+        app:layout_constraintWidth_percent="0.6" />
 
     <!-- End Date -->
     <TextView
@@ -86,7 +139,17 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/startDateTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/endDateEditText"/>
+
+    <EditText
+        android:id="@+id/endDateEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/endDateTextView"
+        app:layout_constraintTop_toBottomOf="@id/startDateTextView"
+        app:layout_constraintWidth_percent="0.6" />
 
     <!-- Spending Box -->
     <TextView
@@ -114,7 +177,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spendingTitleTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.092" />
 
     <Button
         android:id="@+id/editBudgetButton"
@@ -125,7 +188,7 @@
         android:padding="8dp"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- Delete Button -->
     <Button
@@ -137,9 +200,8 @@
         android:padding="8dp"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Back Button (Initially Hidden) -->
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
@@ -148,7 +210,5 @@
         android:text="Back"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
