@@ -4,6 +4,7 @@ import ApiClient
 import LoginResponse
 import TokenManager
 import UserResponse
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         if(TokenManager(this@MainActivity).getAccessToken() != null){
-            ApiClient(null).apiService.user().enqueue(object : Callback<UserResponse> {
+            ApiClient(TokenManager(this@MainActivity).getAccessToken()).apiService.user().enqueue(object : Callback<UserResponse> {
                 override fun onResponse(
                     call: Call<UserResponse>,
                     response: Response<UserResponse>
@@ -43,27 +44,18 @@ class MainActivity : AppCompatActivity() {
                         Globals.SessionUser = response.body()?.user
                     } else {
                         TokenManager(this@MainActivity).removeAccessToken()
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment,LoginFragment())
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .commit();
+                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                     }
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                     TokenManager(this@MainActivity).removeAccessToken()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment,LoginFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .commit();
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
 
                 }
             })
         }else{
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment,LoginFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         }
 
 
