@@ -88,7 +88,6 @@
         android:layout_height="wrap_content"
         android:hint="Savings Goal"
         android:minHeight="48dp"
-        android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -110,6 +109,7 @@
         android:layout_height="wrap_content"
         android:text="Already have an account? Log In"
         android:textColor="@color/black"
+        android:minHeight="48dp"
         android:textStyle="bold"
         android:inputType="number"
         app:layout_constraintTop_toBottomOf="@id/registerButton"

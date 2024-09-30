@@ -5,6 +5,7 @@ import LoginResponse
 import RegisterRequest
 import RegisterResponse
 import TokenManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -106,10 +107,7 @@ class RegisterFragment : Fragment() {
 
 
         binding.loginLink.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment,LoginFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
     }
 

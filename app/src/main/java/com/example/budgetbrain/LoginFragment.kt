@@ -4,6 +4,7 @@ import ApiClient
 import LoginRequest
 import LoginResponse
 import TokenManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -80,10 +81,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.signUpLink.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment,RegisterFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+            startActivity(Intent(requireContext(), RegisterActivity::class.java))
         }
     }
 
