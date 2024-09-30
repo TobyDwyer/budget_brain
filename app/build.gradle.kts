@@ -45,6 +45,12 @@ android {
 
 dependencies {
 
+    implementation(libs.junit.junit)
+    implementation(libs.androidx.rules)
+    androidTestImplementation (libs.androidx.junit.v121)
+    androidTestImplementation (libs.androidx.espresso.core.v361)
+    androidTestImplementation (libs.androidx.espresso.intents)
+    androidTestImplementation ("androidx.test:rules:1.6.1")
     implementation (libs.androidx.credentials.credentials2)
     implementation (libs.androidx.credentials.play.services.auth)
     implementation (libs.googleid)
@@ -63,3 +69,4 @@ dependencies {
     implementation (libs.converter.gson)
     implementation(libs.logging.interceptor)
 }
+
