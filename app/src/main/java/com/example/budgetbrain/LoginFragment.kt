@@ -1,12 +1,21 @@
 package com.example.budgetbrain
 
+import ApiClient
+import LoginRequest
+import LoginResponse
+import TokenManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
 import com.example.budgetbrain.databinding.FragmentLoginBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginFragment : Fragment() {
 
@@ -25,11 +34,56 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener {
-            // Handle login logic here
+            try {
+                val email = binding.emailEditText.text.toString().trim()
+                val password = binding.passwordEditText.text.toString()
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    throw IllegalArgumentException("All fields must be filled")
+                }
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    throw IllegalArgumentException("Invalid email format")
+                }
+
+                if (password.length < 8) {
+                    throw IllegalArgumentException("Password must be at least 8 characters long")
+                }
+
+                val request = LoginRequest(
+                    email = email,
+                    password = password,
+                )
+
+                ApiClient(null).apiService.login(request).enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.nav_host_fragment,HomeFragment())
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .commit();
+                        } else {
+                            Log.e("LoginError", "Error code: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Log.e("LoginFailure", "Failed to login: ${t.message}")
+                    }
+                })
+            } catch (e: Exception) {
+                Log.e("LoginRequest", "Error creating request: ${e.message}")
+            }
         }
 
         binding.signUpLink.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment,RegisterFragment())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
         }
     }
 
