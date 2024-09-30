@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.budgetbrain.adapters.TransactionsAdapter
 import com.example.budgetbrain.databinding.FragmentTransactionsBinding
@@ -26,18 +27,24 @@ class TransactionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Example transaction data
-        val transactionList = listOf(
+        // Initialize the transaction list
+        val transactionList = mutableListOf<TransactionItem>(
             TransactionItem("15 Sep 2024", "$120.50", "Groceries", "Monthly Expenses", "Bought weekly groceries"),
             TransactionItem("10 Sep 2024", "$45.00", "Transport", "Monthly Expenses", "Fuel for the car"),
             TransactionItem("05 Sep 2024", "$150.00", "Entertainment", "Leisure", "Concert tickets")
         )
 
+        // Setup RecyclerView
         binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.transactionRecyclerView.adapter = TransactionsAdapter(transactionList)
+        val adapter = TransactionsAdapter(transactionList)
+        binding.transactionRecyclerView.adapter = adapter
 
         binding.addTransactionFab.setOnClickListener {
-            // Navigate to AddTransactionFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_transaction, AddTransactionFragment())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null)
+                .commit()
         }
     }
 

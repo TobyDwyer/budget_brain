@@ -7,24 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".TransactionsFragment">
 
+    <!-- RecyclerView for displaying transactions -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionRecyclerView"
-        android:layout_width="371dp"
-        android:layout_height="651dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.096" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/addTransactionFab" />
 
+    <!-- FloatingActionButton for adding a new transaction -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTransactionFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="Add"
+        android:contentDescription="Add Transaction"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
