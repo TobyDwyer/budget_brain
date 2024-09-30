@@ -8,60 +8,101 @@
     tools:context=".HomeFragment">
 
     <!-- Title for Budgets -->
-    <TextView
-        android:id="@+id/budgetsTitleTextView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Budgets"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Progress Bar Title -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/budgetRecyclerView"
-        android:layout_width="411dp"
-        android:layout_height="341dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/savingsGoalTitleTextView"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/budgetsTitleTextView"
-        tools:listitem="@layout/item_budget" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/savingsGoalTitleTextView"
+        <TextView
+            android:id="@+id/budgetsTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Budgets"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Budget List -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="Savings Goal"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/budgetRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@id/cardView1">
 
-    <ProgressBar
-        android:id="@+id/savingsGoalProgressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="404dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        android:max="100"
-        android:minHeight="40dp"
-        android:progress="50"
-        android:progressTint="@android:color/holo_blue_light"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/budgetRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="348dp"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_budget" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Title for Savings Goal -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/savingsGoalTitleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+        <TextView
+            android:id="@+id/savingsGoalTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Savings Goal"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Progress Bar -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView4">
+
+        <ProgressBar
+            android:id="@+id/savingsGoalProgressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:max="100"
+            android:minHeight="40dp"
+            android:progress="50"
+            android:progressTint="@android:color/holo_blue_dark"
+            android:padding="8dp"/>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
