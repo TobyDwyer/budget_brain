@@ -22,6 +22,9 @@ class CreateBudgetFragment : Fragment() {
     private var _binding: FragmentCreateBudgetBinding? = null
     private val binding get() = _binding!!
 
+    private var startDate: Date? = null
+    private var endDate: Date? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,11 +39,9 @@ class CreateBudgetFragment : Fragment() {
         binding.createBudgetButton.setOnClickListener {
             try {
                 val name = binding.budgetNameEditText.text.toString().trim()
-                val startDate = binding.startDateEditText.text.toString()
-                val endDate = binding.endDateEditText.text.toString()
                 val amount = binding.budgetAmountEditText.text.toString()
 
-                if (name.isEmpty() || amount.isEmpty()) {
+                if (name.isEmpty() || amount.isEmpty() || startDate != null || endDate != null) {
                     throw IllegalArgumentException("All fields must be filled")
                 }
 
