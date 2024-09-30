@@ -66,6 +66,16 @@ class BudgetFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadBudgets()
+    }
+
+    private fun loadBudgets() {
+
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

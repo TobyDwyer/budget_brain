@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.budgetbrain.databinding.FragmentCreateBudgetBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +41,8 @@ class CreateBudgetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         binding.createBudgetButton.setOnClickListener{createBudget()}
         binding.startDateBtn.setOnClickListener{
@@ -73,6 +76,10 @@ class CreateBudgetFragment : Fragment() {
                 calendar.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
+        }
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigate(R.id.action_createbudgetFragment_to_budgetsFragment)
         }
     }
 
