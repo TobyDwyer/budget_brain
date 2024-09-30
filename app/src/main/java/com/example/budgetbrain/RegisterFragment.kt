@@ -87,10 +87,7 @@ class RegisterFragment : Fragment() {
                      ) {
                          if (response.isSuccessful) {
                              TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-                             parentFragmentManager.beginTransaction()
-                                 .replace(R.id.nav_host_fragment,HomeFragment())
-                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                 .commit();
+                             startActivity(Intent(requireContext(), MainActivity::class.java))
                          } else {
                              Log.e("RegisterError", "Error code: ${response.code()}")
                          }

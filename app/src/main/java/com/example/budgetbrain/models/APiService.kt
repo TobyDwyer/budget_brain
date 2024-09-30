@@ -22,13 +22,13 @@ data class UserResponse(val user: SessionUser)
 
 data class RegisterResponse(val token: String)
 interface ApiService {
-    @POST("api/auth/login")
+    @POST("auth/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
-    @POST("api/auth/register")
+    @POST("auth/register")
     fun register(@Body registerRequest: RegisterRequest): Call<RegisterResponse>
 
-    @POST("api/auth/user")
+    @POST("auth/user")
     fun user(): Call<UserResponse>
 }
 

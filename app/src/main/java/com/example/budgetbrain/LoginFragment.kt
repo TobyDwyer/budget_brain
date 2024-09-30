@@ -46,10 +46,6 @@ class LoginFragment : Fragment() {
                     throw IllegalArgumentException("Invalid email format")
                 }
 
-                if (password.length < 8) {
-                    throw IllegalArgumentException("Password must be at least 8 characters long")
-                }
-
                 val request = LoginRequest(
                     email = email,
                     password = password,
@@ -62,10 +58,7 @@ class LoginFragment : Fragment() {
                     ) {
                         if (response.isSuccessful) {
                             TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.nav_host_fragment,HomeFragment())
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .commit();
+                            startActivity(Intent(requireContext(), MainActivity::class.java))
                         } else {
                             Log.e("LoginError", "Error code: ${response.code()}")
                         }
