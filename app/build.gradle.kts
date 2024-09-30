@@ -47,7 +47,6 @@ dependencies {
 
     implementation (libs.androidx.credentials.credentials2)
     implementation (libs.androidx.credentials.play.services.auth)
-    implementation (libs.googleid)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
