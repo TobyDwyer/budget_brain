@@ -9,14 +9,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionRecyclerView"
-        android:layout_width="374dp"
-        android:layout_height="565dp"
+        android:layout_width="371dp"
+        android:layout_height="651dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.335" />
+        app:layout_constraintVertical_bias="0.096" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTransactionFab"
