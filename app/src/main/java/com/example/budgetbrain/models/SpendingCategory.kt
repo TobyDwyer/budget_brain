@@ -1,6 +1,7 @@
 package com.example.budgetbrain.models
 
 data class SpendingCategory(
-    val categoryName: String,
+    val _id: String,
+    val category: String,
     val amountSpent: Double
 )

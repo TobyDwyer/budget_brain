@@ -32,7 +32,7 @@ class SpendingAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(category: SpendingCategory) {
-            binding.categoryNameTextView.text = category.categoryName
+            binding.categoryNameTextView.text = category.category
             binding.amountSpentTextView.text = "$${category.amountSpent}"
         }
     }

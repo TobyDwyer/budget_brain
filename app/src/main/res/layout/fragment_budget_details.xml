@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BudgetDetailsFragment">
+    tools:context=".BudgetDetailsFragment"
+    android:paddingHorizontal="20dp">
 
     <!-- Title -->
     <TextView
@@ -66,37 +67,18 @@
         app:layout_constraintWidth_percent="0.6" />
 
     <!-- Total Amount -->
-    <TextView
-        android:id="@+id/totalAmountTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Total Amount"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/budgetAmountTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/totalAmountEditText"/>
-
-    <EditText
-        android:id="@+id/totalAmountEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:textSize="14dp"
-        app:layout_constraintTop_toBottomOf="@id/budgetAmountTextView"
-        app:layout_constraintStart_toEndOf="@id/totalAmountTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
 
     <!-- Total Remaining -->
     <TextView
         android:id="@+id/remainingAmountTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Remaining Amount"
         android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/totalAmountTextView"
+        android:text="Remaining Amount"
+        app:layout_constraintEnd_toStartOf="@+id/remainingAmountEditText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/remainingAmountEditText"/>
+        app:layout_constraintTop_toBottomOf="@id/budgetAmountEditText"
+/>
 
     <EditText
         android:id="@+id/remainingAmountEditText"
@@ -104,52 +86,66 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:textSize="14dp"
-        app:layout_constraintTop_toBottomOf="@id/totalAmountTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/remainingAmountTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintTop_toBottomOf="@id/budgetAmountEditText"
+        app:layout_constraintWidth_percent="0.6"
+ />
 
-    <!-- Start Date -->
     <TextView
-        android:id="@+id/startDateTextView"
-        android:layout_width="0dp"
+        android:id="@+id/startlbl"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Date"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/remainingAmountTextView"
+        app:layout_constraintTop_toBottomOf="@id/remainingAmountEditText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/startDateEditText"/>
+        android:text="Start Date: "/>
 
-    <EditText
-        android:id="@+id/startDateEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/startDateTextView"
-        app:layout_constraintTop_toBottomOf="@id/remainingAmountTextView"
-        app:layout_constraintWidth_percent="0.6" />
-
-    <!-- End Date -->
     <TextView
-        android:id="@+id/endDateTextView"
-        android:layout_width="0dp"
+        android:id="@+id/startValueLbl"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End Date"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/startDateTextView"
+        app:layout_constraintTop_toBottomOf="@id/startlbl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/endDateEditText"/>
+        android:text=""/>
 
-    <EditText
-        android:id="@+id/endDateEditText"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/startDateBtn"
+        android:layout_width="wrap_content"
+        android:minHeight="48dp"
         android:layout_height="wrap_content"
-        android:textSize="14dp"
+        android:text="Edit"
+        app:layout_constraintTop_toTopOf="@id/startlbl"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/endDateTextView"
-        app:layout_constraintTop_toBottomOf="@id/startDateTextView"
-        app:layout_constraintWidth_percent="0.6" />
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/endlbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/startDateBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="End Date: "
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/endValueLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/endlbl"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/endDateBtn"
+        android:layout_width="wrap_content"
+        android:minHeight="48dp"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        app:layout_constraintTop_toTopOf="@id/endlbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        />
 
     <!-- Spending Box -->
     <TextView
@@ -160,7 +156,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/endDateTextView"
+        app:layout_constraintTop_toBottomOf="@id/endDateBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

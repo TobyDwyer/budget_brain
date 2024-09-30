@@ -1,3 +1,4 @@
+import com.example.budgetbrain.models.BudgetDetails
 import com.example.budgetbrain.models.BudgetItem
 import com.example.budgetbrain.models.SessionUser
 import retrofit2.Call
@@ -32,6 +33,7 @@ data class BudgetCreateRequest(
 )
 data class BudgetCreateResponse( val budget : BudgetItem)
 data class BudgetListResponse( val budgets : List<BudgetItem>)
+data class BudgetDetailResponse( val budget : BudgetDetails)
 
 
 interface ApiService {
@@ -51,6 +53,9 @@ interface ApiService {
 
     @GET("budgets")
     fun budgets(): Call<BudgetListResponse>
+
+    @GET("budgets/{id}")
+    fun getBudget(@Path("id") id: String): Call<BudgetDetailResponse>
 }
 
 

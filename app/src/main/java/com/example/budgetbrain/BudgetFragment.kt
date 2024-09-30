@@ -32,7 +32,6 @@ class BudgetFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        childFragmentManager.beginTransaction().replace(R.id.nav_budget, BudgetListFragment()).commit()
         super.onViewCreated(view, savedInstanceState)
     }
 
