@@ -1,7 +1,10 @@
 [versions]
 agp = "8.6.1"
 androidxCredentialsCredentials = "<latest version>"
+androidxJunit = "1.2.1"
 converterGson = "2.9.0"
+espressoCoreVersion = "3.6.1"
+=======
 firebaseBom = "33.3.0"
 googleid = "<latest version>"
 kotlin = "1.9.0"
@@ -19,12 +22,19 @@ navigationUiKtx = "2.8.1"
 playServicesAuth = "21.2.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+junitJunit = "4.12"
+rules = "1.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials-credentials2 = { module = "androidx.credentials:credentials", version.ref = "androidxCredentialsCredentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidxCredentialsCredentials" }
+androidx-espresso-core-v361 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+androidx-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espressoCore" }
+androidx-junit-v121 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version = "1.1.0" }
+=======
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -40,6 +50,8 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 google-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
