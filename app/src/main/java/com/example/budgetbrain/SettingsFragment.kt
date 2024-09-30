@@ -37,6 +37,10 @@ class SettingsFragment : Fragment() {
 
         // Initialize the edit texts to be non-editable
         setEditTextEnabled(false)
+
+        binding.closeButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun toggleEditMode() {

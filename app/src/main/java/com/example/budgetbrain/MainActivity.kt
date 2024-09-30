@@ -7,6 +7,7 @@ import UserResponse
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
@@ -58,7 +59,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         }
 
-
+        val profileIcon: ImageView = binding.profileIcon
+        profileIcon.setOnClickListener {
+            try {
+                navController.navigate(R.id.action_global_settingsFragment)
+            } catch (e: Exception) {
+                Log.e("NavigationError", "Failed to navigate to settings fragment", e)
+            } finally {
+                profileIcon.isEnabled = true
+            }
+        }
 
         val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setupWithNavController(navController)
