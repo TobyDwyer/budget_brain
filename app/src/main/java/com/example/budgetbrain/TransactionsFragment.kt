@@ -24,29 +24,6 @@ class TransactionsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Initialize the transaction list
-        val transactionList = mutableListOf<TransactionItem>(
-            TransactionItem("15 Sep 2024", "$120.50", "Groceries", "Monthly Expenses", "Bought weekly groceries"),
-            TransactionItem("10 Sep 2024", "$45.00", "Transport", "Monthly Expenses", "Fuel for the car"),
-            TransactionItem("05 Sep 2024", "$150.00", "Entertainment", "Leisure", "Concert tickets")
-        )
-
-        // Setup RecyclerView
-        binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = TransactionsAdapter(transactionList)
-        binding.transactionRecyclerView.adapter = adapter
-
-        binding.addTransactionFab.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_transaction, AddTransactionFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .addToBackStack(null)
-                .commit()
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

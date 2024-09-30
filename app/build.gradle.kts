@@ -68,5 +68,9 @@ dependencies {
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation(libs.logging.interceptor)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.auth)
+    implementation(libs.google.play.services.auth)
+
 }
 

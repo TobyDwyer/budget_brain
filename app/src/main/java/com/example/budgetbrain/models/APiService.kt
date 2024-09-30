@@ -1,6 +1,7 @@
 import com.example.budgetbrain.models.BudgetDetails
 import com.example.budgetbrain.models.BudgetItem
 import com.example.budgetbrain.models.SessionUser
+import com.example.budgetbrain.models.TransactionItem
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,6 +25,7 @@ data class RegisterRequest(
 data class RegisterResponse(val token: String)
 
 data class UserResponse(val user: SessionUser)
+data class DashboardResponse(val presentageSaved: Int)
 
 data class BudgetCreateRequest(
     val name: String,
@@ -37,6 +39,16 @@ data class BudgetListResponse( val budgets : List<BudgetItem>)
 data class BudgetDetailResponse( val budget : BudgetDetails)
 
 
+data class TransactionCreateRequest(
+    val date: Date,
+    val amount: Double,
+    val category: String,
+    val budgetId: String,
+    val notes: String
+)
+data class TransactionCreateResponse( val transaction : TransactionItem)
+data class TransactionListResponse( val transactions : List<TransactionItem>)
+
 interface ApiService {
     // -------- AUTH ---------
     @POST("auth/login")
@@ -48,8 +60,8 @@ interface ApiService {
     @POST("auth/user")
     fun user(): Call<UserResponse>
 
-    @PUT("budgets/{id}")
-    fun updateBudget(@Path("id") budgetId: String, @Body budget: BudgetDetails): Call<BudgetDetailResponse>
+    @POST("auth/dashboard")
+    fun dashboard(): Call<DashboardResponse>
 
     // -------- BUDGETS ---------
     @POST("budgets")
@@ -60,6 +72,18 @@ interface ApiService {
 
     @GET("budgets/{id}")
     fun getBudget(@Path("id") id: String): Call<BudgetDetailResponse>
+
+    @PUT("budgets/{id}")
+    fun updateBudget(@Path("id") budgetId: String, @Body budget: BudgetDetails): Call<BudgetDetailResponse>
+
+    // -------- Transactions ---------
+    @POST("transactions")
+    fun transactionCreate(@Body budgetCreateRequest: TransactionCreateRequest): Call<TransactionCreateResponse>
+
+    @GET("transactions")
+    fun transactions(): Call<TransactionListResponse>
+
+
 }
 
 
