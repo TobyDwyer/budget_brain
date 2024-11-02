@@ -5,4 +5,5 @@ object Globals {
     fun clear() {
         SessionUser = null
     }
+    var biometricsAvailable: Boolean = false;
 }

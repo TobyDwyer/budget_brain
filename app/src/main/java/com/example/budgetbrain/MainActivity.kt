@@ -4,11 +4,17 @@ import ApiClient
 import LoginResponse
 import TokenManager
 import UserResponse
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.security.KeyStore
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,30 +38,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+
         if(TokenManager(this@MainActivity).getAccessToken() != null){
-            ApiClient(TokenManager(this@MainActivity).getAccessToken()).apiService.user().enqueue(object : Callback<UserResponse> {
-                override fun onResponse(
-                    call: Call<UserResponse>,
-                    response: Response<UserResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Globals.SessionUser = response.body()?.user
-                    } else {
-                        TokenManager(this@MainActivity).removeAccessToken()
-                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                    }
-                }
-
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    TokenManager(this@MainActivity).removeAccessToken()
-                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-
-                }
-            })
+            loginWithToken()
         }else{
             startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         }
@@ -73,4 +64,28 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setupWithNavController(navController)
     }
+
+    private fun loginWithToken(){
+        ApiClient(TokenManager(this@MainActivity).getAccessToken()).apiService.user().enqueue(object : Callback<UserResponse> {
+            override fun onResponse(
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
+            ) {
+                if (response.isSuccessful) {
+                    Globals.SessionUser = response.body()?.user
+                } else {
+                    TokenManager(this@MainActivity).removeAccessToken()
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                TokenManager(this@MainActivity).removeAccessToken()
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+
+            }
+        })
+    }
+
+
 }

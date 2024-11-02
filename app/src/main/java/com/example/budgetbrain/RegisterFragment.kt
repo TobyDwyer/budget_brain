@@ -88,7 +88,7 @@ class RegisterFragment : Fragment() {
                              TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
                              startActivity(Intent(requireContext(), MainActivity::class.java))
                          } else {
-                             Log.e("RegisterError", "Error code: ${response.code()}")
+                             Log.e("RegisterError", "Error code: ${response.message()}")
                          }
                      }
 

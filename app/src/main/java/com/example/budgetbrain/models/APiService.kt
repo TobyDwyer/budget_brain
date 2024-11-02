@@ -60,11 +60,11 @@ interface ApiService {
     @POST("auth/user")
     fun user(): Call<UserResponse>
 
-        @GET("/user/details")
-        fun getUserDetails(): Call<SessionUser>
+    @GET("/user/details")
+    fun getUserDetails(): Call<SessionUser>
 
-        @PUT("/user/update")
-        fun updateUserDetails(@Body user: SessionUser): Call<SessionUser>
+    @PUT("/user/update")
+    fun updateUserDetails(@Body user: SessionUser): Call<SessionUser>
 
     @POST("auth/dashboard")
     fun dashboard(): Call<DashboardResponse>

@@ -62,5 +62,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
     implementation(libs.google.play.services.auth)
+    implementation(libs.androidx.biometric)
 
 }
