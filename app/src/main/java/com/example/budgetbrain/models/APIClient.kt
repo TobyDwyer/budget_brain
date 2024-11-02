@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 class ApiClient(private val token: String?) {
 
     companion object {
-        private const val BASE_URL = "http://budget-brain.eba-t2pzfdsb.eu-north-1.elasticbeanstalk.com/api/"
+        private const val BASE_URL = "http://10.0.2.2:2323/api/"
     }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {

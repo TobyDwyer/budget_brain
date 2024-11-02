@@ -2,12 +2,14 @@ package com.example.budgetbrain
 
 import ApiClient
 import TokenManager
+import UserResponse
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.budgetbrain.databinding.FragmentSettingsBinding
 import com.example.budgetbrain.models.SessionUser
 import retrofit2.Call
@@ -39,28 +41,32 @@ class SettingsFragment : Fragment() {
             toggleEditMode()
         }
 
-        // Save button to save the settings
         binding.saveSettingsButton.setOnClickListener {
             saveUserSettings()
+        }
+
+        binding.logoutButton.setOnClickListener {
+            logout()
         }
 
         // Initialize the edit texts to be non-editable
         setEditTextEnabled(false)
 
-        // Close button to exit the fragment
         binding.closeButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
     private fun fetchUserSettings() {
-        // Make API call to get the user settings
+        // Fetch user details via API
         val token = TokenManager(requireContext()).getAccessToken()
-        ApiClient(token).apiService.getUserDetails().enqueue(object : Callback<SessionUser> {
-            override fun onResponse(call: Call<SessionUser>, response: Response<SessionUser>) {
+        ApiClient(token).apiService.user().enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    // Populate the user data into the form fields
-                    user = response.body()!!
+                    Log.d("Settings", "User details fetched successfully")
+                    user = response.body()?.user!!
+
+                    // Update UI with user details
                     binding.firstNameEditText.setText(user.firstName)
                     binding.lastNameEditText.setText(user.lastName)
                     binding.emailEditText.setText(user.email)
@@ -71,7 +77,7 @@ class SettingsFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<SessionUser>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 Log.e("Settings", "Error fetching user details: ${t.message}")
             }
         })
@@ -120,6 +126,13 @@ class SettingsFragment : Fragment() {
                 Log.e("Settings", "Error updating user details: ${t.message}")
             }
         })
+    }
+
+    private fun logout() {
+        // Clear the token and navigate to login screen
+        TokenManager(requireContext()).removeAccessToken()
+        Log.d("Settings", "User logged out successfully")
+        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
     }
 
     override fun onDestroyView() {

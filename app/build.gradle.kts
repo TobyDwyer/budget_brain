@@ -1,8 +1,10 @@
+// Module-level build.gradle.kts
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
 }
+
+apply(plugin = "com.google.gms.google-services")
 
 android {
     namespace = "com.example.budgetbrain"
@@ -22,7 +24,6 @@ android {
         viewBinding = true
     }
 
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -32,19 +33,22 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
 
 dependencies {
-
-    implementation (libs.androidx.credentials.credentials2)
-    implementation (libs.androidx.credentials.play.services.auth)
+    implementation(libs.firebase.auth.v2211)
+    implementation(libs.play.services.auth.v2000)
+    implementation(libs.androidx.credentials.credentials2)
+    implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -56,11 +60,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
     implementation(libs.google.play.services.auth)
-
 }
