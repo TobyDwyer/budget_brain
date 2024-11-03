@@ -34,15 +34,18 @@ class LoginFragment : Fragment() {
     private val promtManager by lazy {
         BiometricPromptManager(requireActivity() as AppCompatActivity)
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enrollLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            println("Activity Result $result")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        enrollLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            println("Activity Result $it")
-        }
         return binding.root
     }
 
@@ -115,45 +118,7 @@ class LoginFragment : Fragment() {
                                     BiometricPromptManager.BiometricResult.HardwareUnavailable -> TODO()
                                 }
                             }
-//                            if(BiometricUtils.isBiometricReady(requireContext()) && Globals.biometricsAvailable) {
-//                                AlertDialog.Builder(requireContext())
-//                                    .setTitle("Enable Biometric Login")
-//                                    .setMessage("Would you like to enable biometric login for future access?")
-//                                    .setPositiveButton("Yes") { _, _ ->
-//
-//                                        BiometricUtils.enableBiometricLogin(
-//                                            requireContext(),
-//                                            email,
-//                                            password
-//                                        );
-//                                        TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-//                                        startActivity(
-//                                        Intent(
-//                                            requireContext(),
-//                                            MainActivity::class.java
-//                                        )
-//                                    )
-//                                    }
-//                                    .setNegativeButton("No") { _, _ ->
-//                                        TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-//                                        startActivity(
-//                                            Intent(
-//                                                requireContext(),
-//                                                MainActivity::class.java
-//                                            )
-//                                        )
-//                                    }
-//                                    .show()
-//                            }
-//                            else{
-//                                TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-//                                startActivity(
-//                                    Intent(
-//                                        requireContext(),
-//                                        MainActivity::class.java
-//                                    )
-//                                )
-//                            }
+
                         } else {
                             Log.e("LoginError", "Error code: ${response.code()}")
                         }

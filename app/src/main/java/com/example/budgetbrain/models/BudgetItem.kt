@@ -9,8 +9,8 @@ data class BudgetItem(
     val endDate: Date,
     val budgetedAmount: Double,
     val remainingAmount: Double,
-    val categories: List<String>,
-    val createdAt: Date
+//    val categories: List<String>,
+    val createdAt: Date?
 )
 
 data class BudgetDetails(

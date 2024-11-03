@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.ksp) // Add KSP plugin
+
 }
 
 android {
@@ -63,5 +65,12 @@ dependencies {
     implementation(libs.google.firebase.auth)
     implementation(libs.google.play.services.auth)
     implementation(libs.androidx.biometric)
+    // Room
+    implementation( "androidx.room:room-runtime:2.5.0")
+    implementation( "androidx.room:room-ktx:2.5.0")
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+
+    ksp(libs.room.compiler)
 
 }

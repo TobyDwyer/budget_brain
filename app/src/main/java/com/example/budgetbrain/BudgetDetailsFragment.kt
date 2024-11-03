@@ -214,22 +214,22 @@ class BudgetDetailsFragment : Fragment() {
             remainingAmount = budget.remainingAmount
         )
         // Make the API call to update the budget
-        ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.updateBudget(budget._id, updatedBudget).enqueue(object : Callback<BudgetDetailResponse> {
-            override fun onResponse(call: Call<BudgetDetailResponse>, response: Response<BudgetDetailResponse>) {
-                if (response.isSuccessful) {
-                    // Successfully updated the budget
-                    budget = response.body()!!.budget
-                    setupViewMode() // Go back to view mode
-                    updateUI() // Update UI with new budget details
-                } else {
-                    Log.e("UpdateBudgetError", "Error updating budget: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<BudgetDetailResponse>, t: Throwable) {
-                Log.e("UpdateBudgetFailure", "Failed to update budget: ${t.message}")
-            }
-        })
+//        ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.updateBudget(budget._id, updatedBudget).enqueue(object : Callback<BudgetDetailResponse> {
+//            override fun onResponse(call: Call<BudgetDetailResponse>, response: Response<BudgetDetailResponse>) {
+//                if (response.isSuccessful) {
+//                    // Successfully updated the budget
+//                    budget = response.body()!!.budget
+//                    setupViewMode() // Go back to view mode
+//                    updateUI() // Update UI with new budget details
+//                } else {
+//                    Log.e("UpdateBudgetError", "Error updating budget: ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<BudgetDetailResponse>, t: Throwable) {
+//                Log.e("UpdateBudgetFailure", "Failed to update budget: ${t.message}")
+//            }
+//        })
     }
 
     private fun updateUI() {

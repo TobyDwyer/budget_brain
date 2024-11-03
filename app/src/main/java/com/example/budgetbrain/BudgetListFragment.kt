@@ -10,9 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.budgetbrain.adapters.BudgetAdapter
+import com.example.budgetbrain.data.BudgetRep
+import com.example.budgetbrain.data.DatabaseProvider
+import com.example.budgetbrain.data.toItem
 import com.example.budgetbrain.databinding.FragmentBudgetListBinding
+import com.example.budgetbrain.models.BudgetItem
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,35 +39,12 @@ class BudgetListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.budgets().enqueue(object :
-            Callback<BudgetListResponse> {
-            override fun onResponse(
-                call: Call<BudgetListResponse>,
-                response: Response<BudgetListResponse>
-            ) {
-                if (response.isSuccessful) {
-                    binding.budgetListRecyclerView.adapter = BudgetAdapter(
-                        budgetList = response.body()?.budgets?: emptyList(),
-                        onClick = {
-                            val frag = BudgetDetailsFragment()
-                            frag.arguments = arguments?: Bundle()
-                            frag.requireArguments().putString("budgetId", it)
-
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.nav_budget, frag)
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                    )
-                } else {
-                    Log.e("Failure", "Failed to get Budget List: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<BudgetListResponse>, t: Throwable) {
-                Log.e("Failure", "Failed to get Budget List: ${t.message}")
-            }
-        })
+        val apiService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
+        val budgetRep = BudgetRep(DatabaseProvider.getDatabase(requireContext()).budgetDao(),apiService)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val budgetList = budgetRep.getBudgets()
+            setupRecyclerView(budgetList)
+        }
 
         binding.budgetListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.addBudgetFab.setOnClickListener {
@@ -70,6 +53,22 @@ class BudgetListFragment : Fragment() {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit()
         }
+    }
+
+    private fun setupRecyclerView(budgetList: List<BudgetItem>) {
+        binding.budgetListRecyclerView.adapter = BudgetAdapter(
+            budgetList = budgetList,
+            onClick = { budgetId ->
+                val frag = BudgetDetailsFragment()
+                frag.arguments = arguments ?: Bundle()
+                frag.requireArguments().putString("budgetId", budgetId)
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.nav_budget, frag)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        )
     }
 
     override fun onDestroyView() {

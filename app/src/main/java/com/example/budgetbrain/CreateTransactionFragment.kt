@@ -3,8 +3,8 @@ package com.example.budgetbrain
 import ApiClient
 import BudgetListResponse
 import TokenManager
-import TransactionCreateRequest
-import TransactionCreateResponse
+import TransactionWriteRequest
+import TransactionWriteResponse
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -118,7 +118,7 @@ class CreateTransactionFragment : Fragment() {
             val dAmount = amount.toDoubleOrNull()
                 ?: throw NumberFormatException("Invalid budget amount")
 
-            val request = TransactionCreateRequest(
+            val request = TransactionWriteRequest(
                 date = date ?: Date(),
                 amount = dAmount,
                 notes = notes,
@@ -126,11 +126,11 @@ class CreateTransactionFragment : Fragment() {
                 category = category
             )
 
-            ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.transactionCreate(request).enqueue(object :
-                Callback<TransactionCreateResponse> {
+            ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.transactionWrite(request).enqueue(object :
+                Callback<TransactionWriteResponse> {
                 override fun onResponse(
-                    call: Call<TransactionCreateResponse>,
-                    response: Response<TransactionCreateResponse>
+                    call: Call<TransactionWriteResponse>,
+                    response: Response<TransactionWriteResponse>
                 ) {
                     if (response.isSuccessful) {
                         parentFragmentManager.beginTransaction()
@@ -142,7 +142,7 @@ class CreateTransactionFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<TransactionCreateResponse>, t: Throwable) {
+                override fun onFailure(call: Call<TransactionWriteResponse>, t: Throwable) {
                     Log.e("CreateTransactionFailure", "Failed to create transaction: ${t.message}")
                 }
             })

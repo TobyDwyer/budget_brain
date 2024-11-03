@@ -1,18 +1,25 @@
 package com.example.budgetbrain
 
 import ApiClient
-import BudgetCreateRequest
-import BudgetCreateResponse
+import BudgetWriteRequest
+import BudgetWriteResponse
 import TokenManager
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
+import com.example.budgetbrain.data.BudgetRep
+import com.example.budgetbrain.data.DatabaseProvider
 import com.example.budgetbrain.databinding.FragmentCreateBudgetBinding
+import com.example.budgetbrain.models.BudgetItem
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 class CreateBudgetFragment : Fragment() {
 
@@ -41,7 +49,10 @@ class CreateBudgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.createBudgetButton.setOnClickListener { createBudget() }
+        binding.createBudgetButton.setOnClickListener { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createBudget()
+        }
+        }
 
         binding.startDateBtn.setOnClickListener {
             showDatePicker { selectedDate ->
@@ -86,6 +97,7 @@ class CreateBudgetFragment : Fragment() {
         return dateFormat.format(date)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createBudget() {
         try {
             val name = binding.budgetNameEditText.text.toString().trim()
@@ -98,22 +110,29 @@ class CreateBudgetFragment : Fragment() {
             val budgetAmount = amount.toDoubleOrNull()
                 ?: throw NumberFormatException("Invalid budget amount")
 
-            val request = BudgetCreateRequest(
-                name = name,
-                startDate = startDate!!,
-                endDate = endDate!!,
-                budgetedAmount = budgetAmount
-            )
+            val budget =
+                BudgetItem(
+                    name = name,
+                    startDate = startDate!!,
+                    endDate = endDate!!,
+                    budgetedAmount = budgetAmount,
+                    createdAt = null,
+                    remainingAmount = 0.0,
+                    _id = UUID.randomUUID().toString()
+                )
 
-            ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.budgetCreate(request).enqueue(object : Callback<BudgetCreateResponse> {
-                override fun onResponse(
-                    call: Call<BudgetCreateResponse>,
-                    response: Response<BudgetCreateResponse>
-                ) {
-                    if (response.isSuccessful) {
+
+            val appService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
+            val budgetRep = BudgetRep(DatabaseProvider.getDatabase(requireContext()).budgetDao(), apiService= appService)
+
+            lifecycleScope.launch {
+                budgetRep.createBudget(
+                    context = requireContext(), // Pass in the context
+                    budget = budget,
+                    onSuccess = {
                         val frag = BudgetDetailsFragment().apply {
                             arguments = (arguments ?: Bundle()).apply {
-                                putString("budgetId", response.body()?.budget?._id)
+                                putString("budgetId", it._id)
                             }
                         }
 
@@ -121,15 +140,14 @@ class CreateBudgetFragment : Fragment() {
                             .replace(R.id.nav_budget, frag)
                             .addToBackStack(null)
                             .commit()
-                    } else {
-                        Log.e("CreateBudgetError", "Error code: ${response.code()}")
+                    },
+                    onFailure = {
+                        Log.e("CreateBudgetRequest", "Something went wrong")
                     }
-                }
+                )
+            }
 
-                override fun onFailure(call: Call<BudgetCreateResponse>, t: Throwable) {
-                    Log.e("CreateBudgetFailure", "Failed to create budget: ${t.message}")
-                }
-            })
+
         } catch (e: Exception) {
             Log.e("CreateBudgetRequest", "Error creating request: ${e.message}")
         }
