@@ -21,6 +21,7 @@ playServicesAuth = "21.2.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
 playServicesAuthVersion = "20.0.0"
+firebaseMessagingKtx = "24.0.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +45,7 @@ play-services-auth-v2000 = { module = "com.google.android.gms:play-services-auth
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 google-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
