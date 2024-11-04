@@ -191,7 +191,6 @@ class LoginFragment : Fragment() {
             val email = account?.email ?: return
             val idToken = account.idToken ?: return
 
-            // Attempt to log in with the Google ID token
             val loginRequest = LoginRequest(email = email, password = idToken)
 
             ApiClient(null).apiService.login(loginRequest)
@@ -201,10 +200,11 @@ class LoginFragment : Fragment() {
                         response: Response<LoginResponse>
                     ) {
                         if (response.isSuccessful) {
-                            // Login successful, proceed with Firebase authentication
-                            firebaseAuthWithGoogle(idToken)
+                            TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
+
+                            val mainIntent = Intent(requireContext(), MainActivity::class.java)
+                            startActivity(mainIntent)
                         } else {
-                            // Login failed, attempt to register the user
                             registerNewGoogleUser(account)
                         }
                     }
