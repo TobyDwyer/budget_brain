@@ -19,7 +19,7 @@
         android:background="@drawable/card_border"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Budget Details"
+        android:text="@string/budget_details_title"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
                 android:id="@+id/budgetNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Budget Name"
+                android:text="@string/hint_budget_name"
                 android:textSize="16sp"
                 android:padding="8dp"/>
 
@@ -73,7 +73,7 @@
                 android:id="@+id/budgetAmountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Budget Amount"
+                android:text="@string/hint_budget_amount"
                 android:padding="8dp"/>
 
             <EditText
@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Remaining Amount"/>
+                android:text="@string/label_remaining_amount"/>
 
             <EditText
                 android:id="@+id/remainingAmountEditText"
@@ -113,7 +113,7 @@
             android:id="@+id/startlbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Date: "/>
+            android:text="@string/label_start_date"/>
 
         <TextView
             android:id="@+id/startValueLbl"
@@ -127,14 +127,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:text="Edit" />
+            android:text="@string/button_edit" />
 
         <!-- End Date -->
         <TextView
             android:id="@+id/endlbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End Date: "/>
+            android:text="@string/label_end_date"/>
 
         <TextView
             android:id="@+id/endValueLbl"
@@ -148,7 +148,7 @@
             android:layout_width="wrap_content"
             android:minHeight="48dp"
             android:layout_height="wrap_content"
-            android:text="Edit"/>
+            android:text="@string/button_edit"/>
     </LinearLayout>
 
     <!-- Spending Section Layout -->
@@ -169,7 +169,7 @@
             android:id="@+id/spendingTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spending by Category"
+            android:text="@string/label_spending_by_category"
             android:textSize="18sp"
             android:textStyle="bold"
             android:padding="8dp"/>
@@ -190,7 +190,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="268dp"
         android:layout_marginBottom="16dp"
-        android:text="Back"
+        android:text="@string/button_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -201,7 +201,7 @@
         android:layout_marginStart="140dp"
         android:layout_marginBottom="16dp"
         android:padding="8dp"
-        android:text="Edit"
+        android:text="@string/button_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -212,7 +212,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:padding="8dp"
-        android:text="Delete"
+        android:text="@string/button_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

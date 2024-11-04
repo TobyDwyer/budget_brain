@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Toolbar Title -->
+    <string name="toolbar_title">Budget Brein</string>
+
+    <!-- Fragment Titles -->
+    <string name="add_transaction_title">Voeg Transaksie Toe</string>
+    <string name="budget_title">Begroting</string>
+    <string name="budget_details_title">Begroting Besonderhede</string>
+    <string name="create_budget_title">Skep Begroting</string>
+
+    <!-- EditText Hints -->
+    <string name="hint_date">Datum</string>
+    <string name="hint_amount">Bedrag</string>
+    <string name="hint_category">Kategorie</string>
+    <string name="hint_notes">Aantekeninge</string>
+    <string name="hint_budget">Begroting</string>
+    <string name="hint_budget_name">Begrotingsnaam</string>
+    <string name="hint_budget_amount">Begrotingsbedrag</string>
+    <string name="hint_remaining_amount">Overblywende Bedrag</string>
+    <string name="hint_first_name">Naam</string>
+    <string name="hint_last_name">Van</string>
+    <string name="hint_phone">Telefoon Nommer</string>
+    <string name="hint_confirm_password">Bevestig Wagwoord</string>
+    <string name="hint_savings_goal">Spaar Doel</string>
+    <string name="hint_email">E-pos</string>
+    <string name="hint_password">Wagwoord</string>
+
+    <!-- Button Texts -->
+    <string name="button_save_transaction">Stoor Transaksie</string>
+    <string name="button_edit">Wysig</string>
+    <string name="button_delete">Verwyder</string>
+    <string name="button_back">Terug</string>
+    <string name="button_cancel">Kanselleer</string>
+    <string name="button_create_budget">Skep Begroting</string>
+    <string name="button_edit_start_date">Wysig Begin Datum</string>
+    <string name="button_edit_end_date">Wysig Einddatum</string>
+    <string name="button_login">Teken In</string>
+    <string name="button_register">Registreer</string>
+    <string name="button_google_signin">Teken in met Google</string>
+
+    <!-- Labels -->
+    <string name="label_budget_name">Begrotingsnaam</string>
+    <string name="label_budget_amount">Begrotingsbedrag:</string>
+    <string name="label_remaining_amount">Overblywende Bedrag:</string>
+    <string name="label_start_date">Begin Datum:</string>
+    <string name="label_end_date">Einddatum:</string>
+    <string name="label_spending_by_category">Besteding per Kategorie</string>
+    <string name="label_budget_details">Begroting Besonderhede</string>
+
+    <!-- Login Fragment -->
+    <string name="header_login">Teken In</string>
+    <string name="link_signup">Het jy nie \'n rekening nie? Registreer</string>
+
+    <!-- Register Fragment -->
+    <string name="header_signup">Registreer</string>
+    <string name="link_login">Het jy al \'n rekening? Teken In</string>
+
+    <!-- Home Fragment -->
+    <string name="title_budgets">Begrotings</string>
+    <string name="title_savings_goal">Spaar Doel</string>
+
+    <!-- General -->
+    <string name="savings_goal_prompt">Voer jou spaar doel in</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Instellings</string>
+    <string name="first_name_label">Naam</string>
+    <string name="last_name_label">Van</string>
+    <string name="email_label">E-pos</string>
+    <string name="phone_label">Telefoon Nommer</string>
+    <string name="savings_goal_label">Spaar Doel</string>
+    <string name="notification_settings_title">Kennisgewing Instellings</string>
+    <string name="email_notifications">E-pos Kennisgewings</string>
+    <string name="goal_notifications">Doel Kennisgewings</string>
+    <string name="budget_notifications">Begroting Kennisgewings</string>
+    <string name="all_notifications">Alle Kennisgewings</string>
+    <string name="edit_settings">Wysig</string>
+    <string name="delete_account">Verwyder Rekening</string>
+    <string name="save_settings">Stoor Instellings</string>
+    <string name="logout">Teken Uit</string>
+
+    <!-- Budget Item Layout -->
+    <string name="budget_name">Begrotingsnaam</string>
+    <string name="budget_amount">Bedrag: R0.00</string>
+    <string name="budget_remaining">Overblywend: R0.00</string>
+
+    <!-- Transaction Item Layout -->
+    <string name="transaction_date">15 Sep 2024</string>
+    <string name="transaction_amount">$120.50</string>
+    <string name="transaction_category">Kosware</string>
+    <string name="linked_budget">Begroting: Maandelikse Uitgawes</string>
+    <string name="transaction_notes">Gekoop weeklikse kosware</string>
+
+    <!-- Miscellaneous -->
+    <string name="afrikaans">Afrikaans</string>
+    <string name="english">Engels</string>
+    <string name="app_name">budgetbrain</string>
+    <string name="hello_blank_fragment">Hallo leë fragment</string>
+    <string name="default_web_client_id">515869063410-ld98msas3g2ok77vrria4qjsgdtvf680.apps.googleusercontent.com</string>
+</resources>

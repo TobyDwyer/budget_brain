@@ -26,17 +26,18 @@
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Settings"
+            android:text="@string/settings_title"
             android:textSize="28sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/closeButton"
-            android:layout_width="86dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:text="Close"
+            android:text="@string/button_back"
             android:textColor="@android:color/black" />
+
     </LinearLayout>
 
     <!-- Background Section for Inputs -->
@@ -63,14 +64,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="First Name"
+                android:text="@string/first_name_label"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/firstNameEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
+                android:hint="@string/hint_first_name"
                 android:minHeight="48dp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -86,14 +87,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Last Name"
+                android:text="@string/last_name_label"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/lastNameEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
+                android:hint="@string/hint_last_name"
                 android:minHeight="48dp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -109,14 +110,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Email"
+                android:text="@string/email_label"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/emailEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/hint_email"
                 android:minHeight="48dp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -132,14 +133,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Phone Number"
+                android:text="@string/phone_label"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/phoneEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
+                android:hint="@string/hint_phone"
                 android:inputType="phone"
                 android:minHeight="48dp"
                 android:layout_weight="1" />
@@ -156,14 +157,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Savings Goal"
+                android:text="@string/savings_goal_label"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/savingsGoalEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Savings Goal"
+                android:hint="@string/hint_savings_goal"
                 android:inputType="numberDecimal"
                 android:minHeight="48dp"
                 android:layout_weight="1" />
@@ -187,44 +188,44 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notification Settings"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:text="@string/notification_settings_title" />
 
         <CheckBox
             android:id="@+id/emailNotificationCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Email Notifications" />
+            android:text="@string/email_notifications" />
 
         <CheckBox
             android:id="@+id/goalNotificationCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Goal Notifications" />
+            android:text="@string/goal_notifications" />
 
         <CheckBox
             android:id="@+id/budgetNotificationCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Budget Notifications" />
+            android:text="@string/budget_notifications" />
 
         <CheckBox
             android:id="@+id/allNotificationsCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All Notifications" />
+            android:text="@string/all_notifications" />
     </LinearLayout>
 
     <!-- Save Button -->
+
     <Button
         android:id="@+id/editSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="28dp"
-        android:text="Edit"
+        android:text="@string/edit_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -232,13 +233,37 @@
         android:id="@+id/deleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
         android:layout_marginLeft="10dp"
-        android:text="Delete Account"
-        android:textColor="@android:color/white"
+        android:layout_marginBottom="28dp"
         android:backgroundTint="@android:color/holo_red_light"
+        android:text="@string/delete_account"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editSettingsButton"  />
+        app:layout_constraintEnd_toStartOf="@+id/logoutButton"
+        app:layout_constraintStart_toEndOf="@+id/editSettingsButton" />
+
+    <Button
+        android:id="@+id/button_change_language_en"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="onChangeLanguageEnglish"
+        android:text="@string/english"
+        app:layout_constraintEnd_toStartOf="@+id/button_change_language_af"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationLayout" />
+
+    <Button
+        android:id="@+id/button_change_language_af"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="onChangeLanguageAfrikaans"
+        android:text="@string/afrikaans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationLayout" />
 
     <Button
         android:id="@+id/saveSettingsButton"
@@ -247,7 +272,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
         android:layout_marginStart="15dp"
-        android:text="Save Settings"
+        android:text="@string/save_settings"
         android:textColor="@android:color/white"
         android:backgroundTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -258,14 +283,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginEnd="12dp"
         android:layout_marginBottom="28dp"
-        android:layout_marginEnd="10dp"
-        android:text="Logout"
-        android:textColor="@android:color/white"
         android:backgroundTint="@android:color/holo_red_light"
+        android:text="@string/logout"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

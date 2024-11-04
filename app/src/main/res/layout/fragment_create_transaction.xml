@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="End Date: "
+            android:text="@string/label_end_date"
             android:layout_marginTop="20dp"/>
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:minHeight="48dp"
             android:layout_height="wrap_content"
-            android:text="Edit"
+            android:text="@string/button_edit"
             app:layout_constraintTop_toTopOf="@id/datelbl"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -45,7 +45,7 @@
             android:id="@+id/transactionAmountEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:hint="@string/hint_amount"
             android:minHeight="48dp"
             android:inputType="numberDecimal"
             app:layout_constraintTop_toBottomOf="@id/dateBtn"
@@ -66,7 +66,7 @@
             android:id="@+id/transactionNotesEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Notes"
+            android:hint="@string/hint_notes"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="Save Transaction"
+            android:text="@string/button_save_transaction"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"

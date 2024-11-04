@@ -4,6 +4,7 @@ import ApiClient
 import TokenManager
 import UserResponse
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,10 @@ import com.example.budgetbrain.models.SessionUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
+
+
+
 
 class SettingsFragment : Fragment() {
 
@@ -41,6 +46,14 @@ class SettingsFragment : Fragment() {
 
         binding.editSettingsButton.setOnClickListener {
             toggleEditMode()
+        }
+
+        binding.buttonChangeLanguageAf.setOnClickListener(){
+            setLocale("af")
+        }
+
+        binding.buttonChangeLanguageEn.setOnClickListener(){
+            setLocale("en")
         }
 
         binding.saveSettingsButton.setOnClickListener {
@@ -118,6 +131,45 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun setLocale(languageCode: String) {
+        user.languagePreference = languageCode
+        saveUserLanguagePreference()
+
+        // Set locale configuration
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+        config.setLocale(locale)
+        requireContext().createConfigurationContext(config)
+
+        // Apply the updated configuration to the current resources
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        // Restart the fragment to apply changes
+        parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    private fun saveUserLanguagePreference() {
+        val token = TokenManager(requireContext()).getAccessToken()
+        ApiClient(token).apiService.updateUserDetails(user).enqueue(object : Callback<SessionUser> {
+            override fun onResponse(call: Call<SessionUser>, response: Response<SessionUser>) {
+                if (response.isSuccessful) {
+                    Log.d("Settings", "User language preference updated successfully")
+                } else {
+                    Log.e("Settings", "Failed to update language preference: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<SessionUser>, t: Throwable) {
+                Log.e("Settings", "Error updating language preference: ${t.message}")
+            }
+        })
+    }
+
     private fun saveUserSettings() {
         // Prepare updated user data from input fields
         user.firstName = binding.firstNameEditText.text.toString()
@@ -161,4 +213,6 @@ class SettingsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

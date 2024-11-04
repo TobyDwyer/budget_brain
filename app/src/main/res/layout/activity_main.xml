@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:titleTextColor="@android:color/black"
-        app:title="Budget Brain" />
+        app:title="@string/app_name" />
 
     <ImageView
         android:id="@+id/profile_icon"

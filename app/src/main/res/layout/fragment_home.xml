@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Budgets"
+            android:text="@string/title_budgets"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Savings Goal"
+            android:text="@string/title_savings_goal"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
