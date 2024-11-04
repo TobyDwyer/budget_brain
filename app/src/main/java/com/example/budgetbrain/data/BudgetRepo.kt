@@ -36,6 +36,31 @@ class BudgetRep(
         }
     }
 
+    suspend fun getBudget(budgetId: String): BudgetItem? {
+        try {
+            // Fetch the budgets from the API
+            val response = apiService.getBudget(budgetId).awaitResponse()
+            if (response.isSuccessful) {
+                insertBudgetIntoDatabase(response.body()!!.budget.toEntity())
+            }
+
+        } catch (e: Exception) {
+            Log.e("BudgetRepository", "Failed to sync budgets: ${e.message}")
+        }
+
+        // Retrieve all budgets with categories from the database
+        return withContext(Dispatchers.IO) {
+            budgetDao.getBudgetById(budgetId)?.toItem()
+        }
+    }
+
+    suspend fun getBudgetCategories(budgetId: String): List<CategoryAmount> {
+
+        return withContext(Dispatchers.IO) {
+            budgetDao.getCategoryAmountsForBudget(budgetId)
+        }
+    }
+
     suspend fun createBudget(
         context: Context,
         budget: BudgetItem,
@@ -43,7 +68,38 @@ class BudgetRep(
         onFailure: (String) -> Unit
     ) {
         if (Globals.isOnline(context)) {
-            // Online mode: Try to sync with API
+            try {
+                val response = apiService.budgetWrite(BudgetWriteRequest(budget)).awaitResponse()
+                if (response.isSuccessful) {
+                    val budgetRes = response.body()?.budget
+                    if (budgetRes != null) {
+                        updateBudgetIntoDatabase(budgetRes.toEntity())
+                    }
+                        onSuccess(budgetRes!!)
+                } else {
+                    onFailure("Response not successful: ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("BudgetRepository", "Failed to sync budgets: ${e.message}")
+                onFailure("Exception occurred: ${e.message ?: "Unknown error"}")
+            }
+        } else {
+            try {
+                updateBudgetIntoDatabase(budget.toEntity(false))
+                onSuccess(budget)
+            } catch (e: Exception) {
+                Log.e("BudgetRepository", "Failed to save budget locally: ${e.message}")
+                onFailure("Failed to save budget locally: ${e.message ?: "Unknown error"}")
+            }
+        }
+    }
+    suspend fun updateBudget(
+        context: Context,
+        budget: BudgetItem,
+        onSuccess: (BudgetItem) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        if (Globals.isOnline(context)) {
             try {
                 val response = apiService.budgetWrite(BudgetWriteRequest(budget)).awaitResponse()
                 if (response.isSuccessful) {
@@ -99,7 +155,11 @@ class BudgetRep(
     private suspend fun insertBudgetIntoDatabase(budget: BudgetEntity) {
         withContext(Dispatchers.IO) {
             budgetDao.insertBudget(budget) // This should be a suspend function
-
+        }
+    }
+    private suspend fun updateBudgetIntoDatabase(budget: BudgetEntity) {
+        withContext(Dispatchers.IO) {
+            budgetDao.updateBudget(budget) // This should be a suspend function
         }
     }
 }

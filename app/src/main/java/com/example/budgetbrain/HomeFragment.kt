@@ -10,10 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.budgetbrain.adapters.BudgetAdapter
+import com.example.budgetbrain.data.BudgetRep
+import com.example.budgetbrain.data.DatabaseProvider
 import com.example.budgetbrain.databinding.ActivityMainBinding
 import com.example.budgetbrain.databinding.FragmentHomeBinding
+import com.example.budgetbrain.models.BudgetItem
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,26 +52,14 @@ class HomeFragment : Fragment() {
             }
         })
 
-        ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.budgets().enqueue(object :
-            Callback<BudgetListResponse> {
-            override fun onResponse(
-                call: Call<BudgetListResponse>,
-                response: Response<BudgetListResponse>
-            ) {
-                if (response.isSuccessful) {
-                    binding.budgetRecyclerView.adapter = BudgetAdapter(
-                        budgetList = response.body()?.budgets?: emptyList(),
-                        onClick = { 0 }
-                    )
-                } else {
-                    Log.e("Failure", "Failed to get Budget List: ${response.message()}")
-                }
-            }
+        val apiService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
+        val budgetRep = BudgetRep(DatabaseProvider.getDatabase(requireContext()).budgetDao(),apiService)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val budgetList = budgetRep.getBudgets()
+            setupRecyclerView(budgetList)
+        }
 
-            override fun onFailure(call: Call<BudgetListResponse>, t: Throwable) {
-                Log.e("Failure", "Failed to get Budget List: ${t.message}")
-            }
-        })
+        binding.budgetRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         return binding.root
     }
@@ -76,13 +69,14 @@ class HomeFragment : Fragment() {
 
         // Setup RecyclerView
         binding.budgetRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        // You can set an adapter here to handle data
-
-        // Initialize BarChart (requires a library like MPAndroidChart)
-        // Set data for the BarChart here
-
-        // Update progress bar based on savings goal
         binding.savingsGoalProgressBar.progress = 50 // Replace with actual value
+    }
+
+    private fun setupRecyclerView(budgetList: List<BudgetItem>) {
+        binding.budgetRecyclerView.adapter = BudgetAdapter(
+            budgetList = budgetList,
+            onClick = {0}
+        )
     }
 
     override fun onDestroyView() {

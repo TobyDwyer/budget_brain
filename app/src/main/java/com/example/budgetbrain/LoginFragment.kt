@@ -99,50 +99,13 @@ class LoginFragment : Fragment() {
                 ApiClient(null).apiService.login(request).enqueue(object : Callback<LoginResponse> {
                     override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                         if (response.isSuccessful) {
-
-                            lifecycleScope.launch {
-                                // Show the biometric prompt
-                                promtManager.showBiometricPompt(
-                                    title = "Biometric Login",
-                                    description = "Please authenticate using biometrics"
+                            TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
+                            startActivity(
+                                Intent(
+                                    requireContext(),
+                                    MainActivity::class.java
                                 )
-
-                                // Wait for biometric result
-                                val biometricResult = promtManager.getBiometricResult()
-                                when (biometricResult) {
-                                    is BiometricPromptManager.BiometricResult.AuthenticationSuccess-> {
-                                        Log.d("BiometricAuth", "Authentication succeeded")
-                                        TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-                                        startActivity(
-                                        Intent(
-                                            requireContext(),
-                                            MainActivity::class.java
-                                        )
-                                        )
-                                    }
-                                    is BiometricPromptManager.BiometricResult.AuthenticationError -> {
-                                        // Handle failed biometric authentication
-                                        Log.e("BiometricAuth", "Authentication failed: ${biometricResult.error}")
-                                        // Optionally, prompt the user to retry or provide an alternative login method
-                                    }
-
-                                    BiometricPromptManager.BiometricResult.AuthenticationFailed -> TODO()
-                                    BiometricPromptManager.BiometricResult.AuthenticationNotSet -> {
-                                        if(Build.VERSION.SDK_INT >= 30){
-                                            val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-                                                putExtra(
-                                                    Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                                                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL
-                                                )
-                                            }
-                                            enrollLauncher.launch(enrollIntent)
-                                        }
-                                    }
-                                    BiometricPromptManager.BiometricResult.FeatureUnavailable -> TODO()
-                                    BiometricPromptManager.BiometricResult.HardwareUnavailable -> TODO()
-                                }
-                            }
-
+                            )
                         } else {
                             Log.e("LoginError", "Error code: ${response.code()}")
                         }

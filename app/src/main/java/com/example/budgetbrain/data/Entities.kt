@@ -78,3 +78,9 @@ data class TransactionEntity(
     @ColumnInfo(name = "created_at") val createdAt: Date = Date(),
     @ColumnInfo(name = "is_synced") val isSynced: Boolean = false
 )
+
+
+data class CategoryAmount(
+    val categoryName: String,
+    val totalTransacted: Double
+)

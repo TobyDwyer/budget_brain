@@ -26,7 +26,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
 import com.example.budgetbrain.data.AppDatabase
+import com.example.budgetbrain.data.BudgetRep
 import com.example.budgetbrain.data.DatabaseProvider
+import com.example.budgetbrain.data.TransactionRepo
 import com.example.budgetbrain.databinding.ActivityMainBinding
 import com.example.budgetbrain.models.BiometricPromptManager
 import com.example.budgetbrain.models.Globals
@@ -61,6 +63,13 @@ class MainActivity : AppCompatActivity() {
         // Initialize notification channel
         NotificationHelper.createNotificationChannel(this)
         // Retrieve and save FCM token
+        val appService = ApiClient(TokenManager(this).getAccessToken()).apiService
+        lifecycleScope.launch{
+            BudgetRep(DatabaseProvider.getDatabase(this@MainActivity).budgetDao(), apiService= appService).syncUnsynced()
+            TransactionRepo(DatabaseProvider.getDatabase(this@MainActivity).transactionDao(), apiService= appService).syncUnsynced()
+        }
+
+
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM", "Fetching FCM registration token failed", task.exception)
