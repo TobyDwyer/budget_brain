@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">budgetbrain</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_web_client_id">515869063410-ld98msas3g2ok77vrria4qjsgdtvf680.apps.googleusercontent.com</string>
 </resources>
