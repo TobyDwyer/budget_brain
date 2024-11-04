@@ -29,7 +29,7 @@ data class DashboardResponse(val presentageSaved: Int)
 data class BudgetWriteRequest(val budget: BudgetItem)
 data class BudgetWriteResponse(val budget : BudgetItem)
 data class BudgetListResponse( val budgets : List<BudgetItem>)
-data class BudgetDetailResponse( val budget : BudgetItem)
+data class BudgetDetailResponse( val budget : BudgetDetails)
 
 
 data class TransactionWriteRequest(val transaction : TransactionItem)

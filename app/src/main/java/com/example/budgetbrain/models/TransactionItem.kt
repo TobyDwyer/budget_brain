@@ -8,6 +8,6 @@ data class TransactionItem(
     val createdAt: Date,
     val amount: Double,
     val category: String,
-    val budgetId: String,
+    val budget: String,
     val notes: String
 )

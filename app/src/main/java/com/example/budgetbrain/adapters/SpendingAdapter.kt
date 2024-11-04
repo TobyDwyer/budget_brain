@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.budgetbrain.data.CategoryAmount
 import com.example.budgetbrain.databinding.ItemSpendingCategoryBinding
 import com.example.budgetbrain.models.SpendingCategory
 
 class SpendingAdapter(
-    private val spendingList: List<CategoryAmount>
+    private val spendingList: List<SpendingCategory>
 ) : RecyclerView.Adapter<SpendingAdapter.SpendingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpendingViewHolder {
@@ -32,9 +31,9 @@ class SpendingAdapter(
     class SpendingViewHolder(private val binding: ItemSpendingCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(category: CategoryAmount) {
-            binding.categoryNameTextView.text = category.categoryName
-            binding.amountSpentTextView.text = "$${category.totalTransacted}"
+        fun bind(category: SpendingCategory) {
+            binding.categoryNameTextView.text = category.category
+            binding.amountSpentTextView.text = "$${category.amountSpent}"
         }
     }
 }

@@ -32,7 +32,7 @@ class TransactionsAdapter(private val transactionList: List<TransactionItem>) :
         holder.binding.transactionDate.text = formattedDate
         holder.binding.transactionAmount.text = formattedAmount
         holder.binding.transactionCategory.text = transaction.category
-        holder.binding.linkedBudget.text = transaction.budgetId
+        holder.binding.linkedBudget.text = transaction.budget
         holder.binding.transactionNotes.text = transaction.notes
     }
 

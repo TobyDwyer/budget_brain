@@ -3,6 +3,7 @@ package com.example.budgetbrain
 import ApiClient
 import BudgetListResponse
 import TokenManager
+import TransactionWriteResponse
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
@@ -128,7 +128,7 @@ class CreateTransactionFragment : Fragment() {
                 date = date ?: Date(),
                 amount = dAmount,
                 notes = notes,
-                budgetId = (budget as BudgetItem)._id,
+                budget = (budget as BudgetItem)._id,
                 category = category,
                 createdAt = Date(),
                 _id = UUID.randomUUID().toString()
@@ -145,14 +145,7 @@ class CreateTransactionFragment : Fragment() {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .commit()
                     },
-                    onFailure = {
-
-                        Toast.makeText(
-                            requireContext(),
-                            "Failed to create transaction: $it",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    onFailure = TODO()
                 )
             }
 //                .transactionWrite(request).enqueue(object :

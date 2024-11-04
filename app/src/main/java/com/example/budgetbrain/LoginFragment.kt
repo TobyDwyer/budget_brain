@@ -61,7 +61,6 @@ class LoginFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -215,7 +214,7 @@ class LoginFragment : Fragment() {
                     }
                 })
         } catch (e: ApiException) {
-            Log.e("GoogleSignIn", "Google sign in failed", e)
+            Log.e("GoogleSignIn", "Google sign-in failed", e)
         }
     }
 

@@ -22,25 +22,15 @@ interface BudgetDao {
     @Query("SELECT * FROM budgets")
     suspend fun getAllBudgetsWithCategories(): List<BudgetWithCategories>
 
-    @Query("SELECT b.id, b.budgeted_amount, b.user_id, b.created_at, b.end_date, b.is_synced, b.name, b.start_date, (b.budgeted_amount - COALESCE(SUM(t.amount), 0)) AS remaining_amount " +
-            "FROM budgets b LEFT JOIN transactions t ON b.id = t.budget_id " +
-            "GROUP BY b.id")
+    @Query("SELECT * FROM budgets")
     suspend fun getAllBudgets(): List<BudgetEntity>
 
-    @Query("SELECT b.id, b.budgeted_amount, b.user_id, b.created_at, b.end_date, b.is_synced, b.name, b.start_date, (b.budgeted_amount - COALESCE(SUM(t.amount), 0)) AS remaining_amount " +
-            "FROM budgets b " +
-            "LEFT JOIN transactions t ON b.id = t.budget_id " +
-            "WHERE b.id = :budgetId " +
-            "GROUP BY b.id")
+    @Query("SELECT * FROM budgets WHERE id = :budgetId")
     suspend fun getBudgetById(budgetId: String): BudgetEntity?
 
-    @Query("""
-        SELECT t.category AS categoryName, COALESCE(SUM(t.amount), 0) AS totalTransacted
-        FROM transactions t 
-        WHERE t.budget_id = :budgetId
-        GROUP BY t.category
-    """)
-    suspend fun getCategoryAmountsForBudget(budgetId: String): List<CategoryAmount>
+    @Transaction
+    @Query("SELECT * FROM budgets WHERE id = :budgetId")
+    suspend fun getBudgetWithCategoriesById(budgetId: String): BudgetWithCategories?
 
 
     @Query("SELECT * FROM budgets WHERE is_synced = 0")

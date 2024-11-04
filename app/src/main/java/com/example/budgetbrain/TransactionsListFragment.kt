@@ -10,18 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.budgetbrain.adapters.BudgetAdapter
 import com.example.budgetbrain.adapters.TransactionsAdapter
-import com.example.budgetbrain.data.BudgetRep
-import com.example.budgetbrain.data.DatabaseProvider
-import com.example.budgetbrain.data.TransactionRepo
 import com.example.budgetbrain.databinding.FragmentTransactionsBinding
 import com.example.budgetbrain.databinding.FragmentTransactionsListBinding
-import com.example.budgetbrain.models.BudgetItem
 import com.example.budgetbrain.models.TransactionItem
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,22 +30,38 @@ class TransactionsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTransactionsListBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val apiService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
-        val transactionRepo = TransactionRepo(DatabaseProvider.getDatabase(requireContext()).transactionDao(),apiService)
-        viewLifecycleOwner.lifecycleScope.launch {
-            val transactionList = transactionRepo.getTransactions()
-            setupRecyclerView(transactionList)
-        }
-        binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // Initialize the transaction list
+        val transactionList = emptyList<TransactionItem>()
+        ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.transactions().enqueue(object :
+            Callback<TransactionListResponse> {
+            override fun onResponse(
+                call: Call<TransactionListResponse>,
+                response: Response<TransactionListResponse>
+            ) {
+                if (response.isSuccessful) {
+                    binding.transactionRecyclerView.adapter = TransactionsAdapter(
+                        transactionList = response.body()?.transactions?: emptyList()
+                    )
+                } else {
+                    Log.e("Failure", "Failed to get Transaction List: ${response.message()}")
+                }
+            }
 
+            override fun onFailure(call: Call<TransactionListResponse>, t: Throwable) {
+                Log.e("Failure", "Failed to get Transaction List: ${t.message}")
+            }
+        })
+
+        // Setup RecyclerView
+        binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val adapter = TransactionsAdapter(transactionList)
+        binding.transactionRecyclerView.adapter = adapter
 
         binding.addTransactionFab.setOnClickListener {
             parentFragmentManager.beginTransaction()
@@ -59,10 +69,6 @@ class TransactionsListFragment : Fragment() {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit()
         }
-    }
-
-    private fun setupRecyclerView(transactionList: List<TransactionItem>) {
-        binding.transactionRecyclerView.adapter = TransactionsAdapter(transactionList)
     }
 
     override fun onDestroyView() {

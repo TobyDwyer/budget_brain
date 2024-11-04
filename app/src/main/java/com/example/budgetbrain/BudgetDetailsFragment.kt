@@ -9,21 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.budgetbrain.adapters.BudgetAdapter
-import com.example.budgetbrain.data.BudgetRep
-import com.example.budgetbrain.data.CategoryAmount
-import com.example.budgetbrain.data.DatabaseProvider
 import com.example.budgetbrain.databinding.FragmentBudgetDetailsBinding
 import com.example.budgetbrain.models.BudgetDetails
-import com.example.budgetbrain.models.BudgetItem
 import com.example.budgetbrain.models.SpendingCategory
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +30,8 @@ class BudgetDetailsFragment : Fragment() {
     private var _binding: FragmentBudgetDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private var budget: BudgetDetails? = null
+    private lateinit var budget: BudgetDetails
+    private val spendingList = mutableListOf<SpendingCategory>() // Example spending list
 
     private var isEditing = false // Track whether we are in Edit Mode
     private var isStartDatePicker = false
@@ -55,31 +49,31 @@ class BudgetDetailsFragment : Fragment() {
 
         val budgetId = requireArguments().getString("budgetId")
         if (budgetId != null) {
-            val apiService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
-            val budgetRep = BudgetRep(DatabaseProvider.getDatabase(requireContext()).budgetDao(),apiService)
-            viewLifecycleOwner.lifecycleScope.launch {
-                val b = budgetRep.getBudget(budgetId)
-                val cat = budgetRep.getBudgetCategories(budgetId)
-                if (b != null) {
-                    budget = BudgetDetails(
-                        _id = b._id,
-                        createdAt = b.createdAt,
-                        budgetedAmount = b.budgetedAmount,
-                        categories = cat,
-                        name = b.name,
-                        startDate = b.startDate,
-                        remainingAmount = b.remainingAmount,
-                        endDate = b.endDate
-                    )
-                }else{
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.nav_budget, BudgetListFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .commit()
+            ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.getBudget(budgetId).enqueue(object :
+                Callback<BudgetDetailResponse> {
+                override fun onResponse(
+                    call: Call<BudgetDetailResponse>,
+                    response: Response<BudgetDetailResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        budget = response.body()!!.budget
+
+                        binding.budgetNameEditText.setText(budget.name)
+                        binding.budgetAmountEditText.setText(budget.budgetedAmount.toString())
+                        binding.remainingAmountEditText.setText((budget.budgetedAmount - budget.categories.sumOf { it.amountSpent }).toString())
+                        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        binding.startValueLbl.text = dateFormat.format(budget.startDate)
+                        binding.endValueLbl.text = dateFormat.format(budget.endDate)
+                        binding.spendingRecyclerView.adapter = SpendingAdapter(budget.categories)
+                    } else {
+                        Log.e("Failure", "Failed to get Budget List: ${response.message()}")
+                    }
                 }
 
-                updateUI()
-            }
+                override fun onFailure(call: Call<BudgetDetailResponse>, t: Throwable) {
+                    Log.e("Failure", "Failed to get Budget List: ${t.message}")
+                }
+            })
         }
 
 
@@ -121,10 +115,11 @@ class BudgetDetailsFragment : Fragment() {
 
 
         binding.deleteBudgetButton.setOnClickListener {
-
+            // Handle delete logic here
         }
 
         binding.backButton.setOnClickListener {
+            // Revert to View Mode without saving changes
             setupViewMode()
         }
     }
@@ -208,62 +203,43 @@ class BudgetDetailsFragment : Fragment() {
             return
         }
 
-        val updatedBudget = BudgetItem(
-            _id = budget!!._id,
+        val updatedBudget = BudgetDetails(
+            _id = budget._id,
             name = updatedName,
-            budgetedAmount = budget!!.budgetedAmount,
+            budgetedAmount = budget.budgetedAmount,
             startDate = updatedStart!!,
             endDate = updatedEnd!!,
-            createdAt = budget!!.createdAt,
-            remainingAmount = budget!!.remainingAmount
+            categories = budget.categories,
+            createdAt = budget.createdAt,
+            remainingAmount = budget.remainingAmount
         )
-        val apiService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
-        val budgetRep = BudgetRep(DatabaseProvider.getDatabase(requireContext()).budgetDao(),apiService)
-        viewLifecycleOwner.lifecycleScope.launch {
-            budgetRep.updateBudget(
-                requireContext(), updatedBudget,
-                onSuccess = {
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        val b = budgetRep.getBudget(it._id)
-                        val cat = budgetRep.getBudgetCategories(it._id)
-                        if (b != null) {
-                            budget = BudgetDetails(
-                                _id = b._id,
-                                createdAt = b.createdAt,
-                                budgetedAmount = b.budgetedAmount,
-                                categories = cat,
-                                name = b.name,
-                                startDate = b.startDate,
-                                remainingAmount = b.remainingAmount,
-                                endDate = b.endDate
-                            )
-                            setupViewMode()
-                            updateUI()
-                        }
-                    }
-                },
-                onFailure = {
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed to update budget: $it",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            )
-        }
-
+        // Make the API call to update the budget
+//        ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.updateBudget(budget._id, updatedBudget).enqueue(object : Callback<BudgetDetailResponse> {
+//            override fun onResponse(call: Call<BudgetDetailResponse>, response: Response<BudgetDetailResponse>) {
+//                if (response.isSuccessful) {
+//                    // Successfully updated the budget
+//                    budget = response.body()!!.budget
+//                    setupViewMode() // Go back to view mode
+//                    updateUI() // Update UI with new budget details
+//                } else {
+//                    Log.e("UpdateBudgetError", "Error updating budget: ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<BudgetDetailResponse>, t: Throwable) {
+//                Log.e("UpdateBudgetFailure", "Failed to update budget: ${t.message}")
+//            }
+//        })
     }
 
     private fun updateUI() {
-        if(budget != null) {
-            binding.budgetNameEditText.setText(budget!!.name)
-            binding.budgetAmountEditText.setText(budget!!.budgetedAmount.toString())
-            binding.remainingAmountEditText.setText((budget!!.budgetedAmount - budget!!.categories.sumOf { it.totalTransacted }).toString())
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            binding.startValueLbl.text = dateFormat.format(budget!!.startDate)
-            binding.endValueLbl.text = dateFormat.format(budget!!.endDate)
-            binding.spendingRecyclerView.adapter = SpendingAdapter(budget!!.categories)
-        }
+        binding.budgetNameEditText.setText(budget.name)
+        binding.budgetAmountEditText.setText(budget.budgetedAmount.toString())
+        binding.remainingAmountEditText.setText((budget.budgetedAmount - budget.categories.sumOf { it.amountSpent }).toString())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        binding.startValueLbl.text = dateFormat.format(budget.startDate)
+        binding.endValueLbl.text = dateFormat.format(budget.endDate)
+        binding.spendingRecyclerView.adapter = SpendingAdapter(budget.categories)
     }
 
 
