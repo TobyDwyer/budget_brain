@@ -32,7 +32,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.tasks.Task
 
 class LoginFragment : Fragment() {

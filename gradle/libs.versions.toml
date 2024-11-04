@@ -6,6 +6,7 @@ converterGson = "2.9.0"
 firebaseAuthVersion = "22.1.1"
 firebaseBom = "33.3.0"
 googleid = "<latest version>"
+googleServices = "4.4.2"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -35,6 +36,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 firebase-auth-v2211 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -57,6 +59,6 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

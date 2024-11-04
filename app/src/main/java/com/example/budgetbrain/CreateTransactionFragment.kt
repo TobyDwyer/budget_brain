@@ -3,7 +3,6 @@ package com.example.budgetbrain
 import ApiClient
 import BudgetListResponse
 import TokenManager
-import TransactionWriteRequest
 import TransactionWriteResponse
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -14,9 +13,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import com.example.budgetbrain.adapters.BudgetSpinAdapter
+import com.example.budgetbrain.data.DatabaseProvider
+import com.example.budgetbrain.data.TransactionRepo
 import com.example.budgetbrain.databinding.FragmentCreateTransactionBinding
 import com.example.budgetbrain.models.BudgetItem
+import com.example.budgetbrain.models.TransactionItem
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 class CreateTransactionFragment : Fragment() {
 
@@ -118,34 +123,51 @@ class CreateTransactionFragment : Fragment() {
             val dAmount = amount.toDoubleOrNull()
                 ?: throw NumberFormatException("Invalid budget amount")
 
-            val request = TransactionWriteRequest(
+            val txn = TransactionItem(
+
                 date = date ?: Date(),
                 amount = dAmount,
                 notes = notes,
-                budgetId = (budget as BudgetItem)._id,
-                category = category
+                budget = (budget as BudgetItem)._id,
+                category = category,
+                createdAt = Date(),
+                _id = UUID.randomUUID().toString()
             )
 
-            ApiClient(TokenManager(requireContext()).getAccessToken()).apiService.transactionWrite(request).enqueue(object :
-                Callback<TransactionWriteResponse> {
-                override fun onResponse(
-                    call: Call<TransactionWriteResponse>,
-                    response: Response<TransactionWriteResponse>
-                ) {
-                    if (response.isSuccessful) {
+            val apiService = ApiClient(TokenManager(requireContext()).getAccessToken()).apiService
+            val txnRepo = TransactionRepo(DatabaseProvider.getDatabase(requireContext()).transactionDao(),apiService)
+            lifecycleScope.launch {
+                txnRepo.createTransaction(
+                    requireContext(), txn,
+                    onSuccess = {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.nav_transaction, TransactionsListFragment())
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .commit()
-                    } else {
-                        Log.e("CreateTransactionError", "Error code: ${response.code()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<TransactionWriteResponse>, t: Throwable) {
-                    Log.e("CreateTransactionFailure", "Failed to create transaction: ${t.message}")
-                }
-            })
+                    },
+                    onFailure = TODO()
+                )
+            }
+//                .transactionWrite(request).enqueue(object :
+//                Callback<TransactionWriteResponse> {
+//                override fun onResponse(
+//                    call: Call<TransactionWriteResponse>,
+//                    response: Response<TransactionWriteResponse>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        parentFragmentManager.beginTransaction()
+//                            .replace(R.id.nav_transaction, TransactionsListFragment())
+//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                            .commit()
+//                    } else {
+//                        Log.e("CreateTransactionError", "Error code: ${response.code()}")
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<TransactionWriteResponse>, t: Throwable) {
+//                    Log.e("CreateTransactionFailure", "Failed to create transaction: ${t.message}")
+//                }
+//            })
 
         } catch (e: Exception) {
             Log.e("CreateTransactionRequest", "Error creating request: ${e.message}")

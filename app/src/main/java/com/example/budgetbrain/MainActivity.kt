@@ -31,6 +31,7 @@ import com.example.budgetbrain.databinding.ActivityMainBinding
 import com.example.budgetbrain.models.BiometricPromptManager
 import com.example.budgetbrain.models.Globals
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -59,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         // Initialize notification channel
         NotificationHelper.createNotificationChannel(this)
-
         // Retrieve and save FCM token
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -72,9 +72,9 @@ class MainActivity : AppCompatActivity() {
             Log.d("FCM", "FCM Token: $fcmToken")
 
             // Save FCM token to shared preferences or send it to your backend
-            TokenManager(this).saveAccessToken(fcmToken)
+//            TokenManager(this).saveAccessToken(fcmToken)
         }
-
+        if(TokenManager(this).getAccessToken() != null){
             lifecycleScope.launch {
                 // Show the biometric prompt
                 promtManager.showBiometricPompt(
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                         Log.e("BiometricAuth", "Authentication failed: ${biometricResult.error}")
                         Toast.makeText(
                             this@MainActivity,
-                            "Biometric authentication failed. Please try again or use another login method.",
+                            "Biometric authentication failed. Please try again.",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -147,6 +147,12 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+        }
+        else{
+            TokenManager(this@MainActivity).removeAccessToken()
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        }
+
 
 
         val profileIcon: ImageView = binding.profileIcon

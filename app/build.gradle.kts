@@ -1,12 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
-    alias(libs.plugins.ksp) // Add KSP plugin
-
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.ksp)
 }
 
-apply(plugin = "com.google.gms.google-services")
+//apply(plugin = "com.google.gms.google-services")
 
 android {
     namespace = "com.example.budgetbrain"
@@ -69,8 +68,8 @@ dependencies {
     implementation(libs.google.play.services.auth)
     implementation(libs.androidx.biometric)
     // Room
-    implementation( "androidx.room:room-runtime:2.5.0")
-    implementation( "androidx.room:room-ktx:2.5.0")
+    implementation( libs.room.runtime)
+    implementation( libs.room.ktx)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
 

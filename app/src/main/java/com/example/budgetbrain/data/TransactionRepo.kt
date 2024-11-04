@@ -4,11 +4,9 @@ import ApiService
 import TransactionWriteRequest
 import android.content.Context
 import android.util.Log
-import com.example.budgetbrain.models.BudgetItem
 import com.example.budgetbrain.models.Globals
 import com.example.budgetbrain.models.TransactionItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
@@ -38,7 +36,7 @@ class TransactionRepo(
         }
     }
 
-    suspend fun createBudget(
+    suspend fun createTransaction(
         context: Context,
         transaction: TransactionItem,
         onSuccess: (TransactionItem) -> Unit,
