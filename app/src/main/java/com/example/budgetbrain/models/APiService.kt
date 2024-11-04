@@ -50,7 +50,7 @@ interface ApiService {
     @GET("/user/details")
     fun getUserDetails(): Call<SessionUser>
 
-    @PUT("/user/update")
+    @PUT("auth/update")
     fun updateUserDetails(@Body user: SessionUser): Call<SessionUser>
 
     @POST("auth/dashboard")
