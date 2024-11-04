@@ -29,7 +29,7 @@ St10019602 Toby Dwyer St10039352 Brandon Calits
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/budgetbrain.git
+   git clone https://github.com/TobyDwyer/budgetbrain.git
 2. Open the project in Android Studio.
 3. Sync the project with Gradle files.
 4. Set up Firebase in your project and configure the necessary services.
