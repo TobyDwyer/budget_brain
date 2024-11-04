@@ -116,7 +116,7 @@ class SettingsFragment : Fragment() {
             override fun onResponse(call: Call<SessionUser>, response: Response<SessionUser>) {
                 if (response.isSuccessful) {
                     Log.d("Settings", "User details updated successfully")
-                    toggleEditMode()  // Optionally toggle back to view mode after saving
+                    toggleEditMode()
                 } else {
                     Log.e("Settings", "Failed to update user details: ${response.message()}")
                 }
