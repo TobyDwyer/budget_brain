@@ -1,5 +1,6 @@
 package com.example.budgetbrain.models
 
+import com.example.budgetbrain.data.CategoryAmount
 import java.util.Date
 
 data class BudgetItem(
@@ -20,6 +21,6 @@ data class BudgetDetails(
     val endDate: Date,
     val budgetedAmount: Double,
     val remainingAmount: Double,
-    val categories: List<SpendingCategory>,
-    val createdAt: Date
+    val categories: List<CategoryAmount>,
+    val createdAt: Date?
 )

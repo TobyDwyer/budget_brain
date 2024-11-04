@@ -3,8 +3,6 @@ package com.example.budgetbrain
 import ApiClient
 import LoginRequest
 import LoginResponse
-import RegisterRequest
-import RegisterResponse
 import TokenManager
 import android.content.Intent
 import android.os.Build
@@ -59,6 +57,7 @@ class LoginFragment : Fragment() {
                 println("Activity Result $result")
             }
     }
+
 
 
     override fun onCreateView(
@@ -214,7 +213,7 @@ class LoginFragment : Fragment() {
                     }
                 })
         } catch (e: ApiException) {
-            Log.e("GoogleSignIn", "Google sign-in failed", e)
+            Log.e("GoogleSignIn", "Google sign in failed", e)
         }
     }
 

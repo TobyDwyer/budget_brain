@@ -21,9 +21,8 @@ class TransactionRepo(
             if (response.isSuccessful) {
                 response.body()?.transactions?.map {
                     it.toEntity()
-                }?.let { budgets ->
-                    // Insert budgets into the database in a coroutine context
-                    insertTransactionsIntoDatabase(budgets)
+                }?.let { transactions ->
+                    insertTransactionsIntoDatabase(transactions)
                 }
             }
         } catch (e: Exception) {
@@ -115,7 +114,7 @@ fun TransactionItem.toEntity(isSynced: Boolean = true): TransactionEntity {
         isSynced = isSynced,
         amount = amount,
         category = category,
-        budgetId = budget
+        budgetId = budgetId
     )
 }
 
@@ -126,7 +125,7 @@ fun TransactionEntity.toItem(): TransactionItem {
         createdAt = createdAt,
         amount = amount,
         category = category,
-        budget = budgetId,
+        budgetId = budgetId,
         notes = notes ?: ""
     )
 }
