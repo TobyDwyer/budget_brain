@@ -31,12 +31,12 @@ import com.example.budgetbrain.databinding.ActivityMainBinding
 import com.example.budgetbrain.models.BiometricPromptManager
 import com.example.budgetbrain.models.Globals
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.security.KeyStore
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,7 +57,23 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        // Initialize notification channel
+        NotificationHelper.createNotificationChannel(this)
 
+        // Retrieve and save FCM token
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM token
+            val fcmToken = task.result
+            Log.d("FCM", "FCM Token: $fcmToken")
+
+            // Save FCM token to shared preferences or send it to your backend
+            TokenManager(this).saveAccessToken(fcmToken)
+        }
 
             lifecycleScope.launch {
                 // Show the biometric prompt

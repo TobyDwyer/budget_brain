@@ -6,6 +6,8 @@ plugins {
 
 }
 
+apply(plugin = "com.google.gms.google-services")
+
 android {
     namespace = "com.example.budgetbrain"
     compileSdk = 34
@@ -23,7 +25,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
 
     buildTypes {
         release {
@@ -44,9 +45,10 @@ android {
 }
 
 dependencies {
-
-    implementation (libs.androidx.credentials.credentials2)
-    implementation (libs.androidx.credentials.play.services.auth)
+    implementation(libs.firebase.auth.v2211)
+    implementation(libs.play.services.auth.v2000)
+    implementation(libs.androidx.credentials.credentials2)
+    implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -55,11 +57,12 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.messaging.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)

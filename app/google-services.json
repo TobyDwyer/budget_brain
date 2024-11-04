@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "515869063410",
     "project_id": "budgetbrain-58848",
-    "storage_bucket": "budgetbrain-58848.appspot.com"
+    "storage_bucket": "budgetbrain-58848.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,20 @@
           "package_name": "com.example.budgetbrain"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "515869063410-ld98msas3g2ok77vrria4qjsgdtvf680.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.budgetbrain",
+            "certificate_hash": "4510f940b3200fcb53ab808d8b6600b4f7397faa"
+          }
+        },
+        {
+          "client_id": "515869063410-csqooiaqtehi832ujaioo3hp4a835caa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC1mn2EQcf_TGVtr3sU4HqmVAoxv_-s1go"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515869063410-csqooiaqtehi832ujaioo3hp4a835caa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
