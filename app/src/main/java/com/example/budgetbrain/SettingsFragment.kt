@@ -3,6 +3,8 @@ package com.example.budgetbrain
 import ApiClient
 import TokenManager
 import UserResponse
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -55,6 +57,8 @@ class SettingsFragment : Fragment() {
         binding.closeButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        binding.deleteAccount.setOnClickListener{DeleteAccount()}
     }
 
     private fun fetchUserSettings() {
@@ -86,7 +90,19 @@ class SettingsFragment : Fragment() {
     private fun toggleEditMode() {
         isEditing = !isEditing
         setEditTextEnabled(isEditing)
-        binding.editSettingsButton.text = if (isEditing) "Cancel" else "Edit"
+
+        if (isEditing){
+            binding.editSettingsButton.text = "Cancel"
+            binding.logoutButton.visibility = View.GONE
+            binding.deleteAccount.visibility = View.GONE
+            binding.saveSettingsButton.visibility = View.VISIBLE
+        }else{
+            binding.editSettingsButton.text = "Edit"
+            binding.logoutButton.visibility = View.VISIBLE
+            binding.deleteAccount.visibility = View.VISIBLE
+            binding.saveSettingsButton.visibility = View.GONE
+        }
+
     }
 
     private fun setEditTextEnabled(enabled: Boolean) {
@@ -127,10 +143,16 @@ class SettingsFragment : Fragment() {
             }
         })
     }
+    private fun DeleteAccount(){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("http://ec2-13-53-175-17.eu-north-1.compute.amazonaws.com/login.html")
+        requireContext().startActivity(intent)
+    }
 
     private fun logout() {
         // Clear the token and navigate to login screen
         TokenManager(requireContext()).removeAccessToken()
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
         Log.d("Settings", "User logged out successfully")
         findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
     }

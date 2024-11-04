@@ -226,18 +226,32 @@
         android:layout_marginBottom="28dp"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/saveSettingsButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/saveSettingsButton"
+        android:id="@+id/deleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
-        android:text="Save Settings"
+        android:layout_marginLeft="10dp"
+        android:text="Delete Account"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/editSettingsButton"  />
+
+    <Button
+        android:id="@+id/saveSettingsButton"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:layout_marginStart="15dp"
+        android:text="Save Settings"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_green_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editSettingsButton"  />
 
     <Button
         android:id="@+id/logoutButton"
@@ -245,10 +259,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="28dp"
+        android:layout_marginEnd="10dp"
         android:text="Logout"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintStart_toEndOf="@+id/saveSettingsButton" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
