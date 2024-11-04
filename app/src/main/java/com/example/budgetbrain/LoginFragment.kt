@@ -3,6 +3,8 @@ package com.example.budgetbrain
 import ApiClient
 import LoginRequest
 import LoginResponse
+import RegisterRequest
+import RegisterResponse
 import TokenManager
 import android.content.Intent
 import android.os.Build
@@ -56,7 +58,6 @@ class LoginFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,19 +68,25 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         auth = FirebaseAuth.getInstance()
+        setupGoogleSignIn()
+        setupLoginButtons()
+    }
 
+    private fun setupGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+    }
 
+    private fun setupLoginButtons() {
         binding.googleSignInButton.setOnClickListener {
-            val signInIntent = googleSignInClient.signInIntent
-            googleSignInLauncher.launch(signInIntent)
+            googleSignInClient.signOut().addOnCompleteListener {
+                val signInIntent = googleSignInClient.signInIntent
+                googleSignInLauncher.launch(signInIntent)
+            }
         }
 
         binding.loginButton.setOnClickListener {
@@ -133,10 +140,53 @@ class LoginFragment : Fragment() {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         try {
             val account = task.getResult(ApiException::class.java)
-            firebaseAuthWithGoogle(account.idToken!!)
+            val email = account?.email ?: return
+            val idToken = account.idToken ?: return
+
+            val loginRequest = LoginRequest(email = email, password = idToken)
+            ApiClient(null).apiService.login(loginRequest).enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                    if (response.isSuccessful) {
+                        TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                    } else {
+                        registerNewGoogleUser(account)
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Log.e("GoogleSignIn", "Failed to login with Google: ${t.message}")
+                }
+            })
         } catch (e: ApiException) {
-            Log.e("GoogleSignIn", "Google sign in failed", e)
+            Log.e("GoogleSignIn", "Google sign-in failed", e)
         }
+    }
+
+    private fun registerNewGoogleUser(account: GoogleSignInAccount) {
+        val registerRequest = RegisterRequest(
+            firstName = account.givenName ?: "Unknown",
+            lastName = account.familyName ?: "Unknown",
+            email = account.email ?: "",
+            phoneNumber = "N/A",
+            password = account.idToken ?: "default_password",
+            languagePreference = "en",
+            savingsGoal = 0.0
+        )
+
+        ApiClient(null).apiService.register(registerRequest).enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                if (response.isSuccessful) {
+                    firebaseAuthWithGoogle(account.idToken!!)
+                } else {
+                    Log.e("RegisterError", "Failed to register Google user")
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                Log.e("RegisterError", "Failed to register Google user: ${t.message}")
+            }
+        })
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
