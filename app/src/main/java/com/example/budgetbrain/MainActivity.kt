@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 when (biometricResult) {
                     is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
                         Log.d("BiometricAuth", "Authentication succeeded")
-                        if(!Globals.isOnline(this@MainActivity)){
+                        if(Globals.isOnline(this@MainActivity)){
                             if (TokenManager(this@MainActivity).getAccessToken() != null) {
                                 loginWithToken()
                             } else {
