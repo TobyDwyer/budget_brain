@@ -3,6 +3,8 @@ package com.example.budgetbrain
 import ApiClient
 import LoginRequest
 import LoginResponse
+import RegisterRequest
+import RegisterResponse
 import TokenManager
 import android.content.Intent
 import android.os.Build
