@@ -161,8 +161,6 @@ class LoginFragment : Fragment() {
                                 }
                             }
 
-                            TokenManager(requireContext()).saveAccessToken(response.body()!!.token)
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
                         } else {
                             Log.e("LoginError", "Error code: ${response.code()}")
                         }
@@ -253,14 +251,9 @@ class LoginFragment : Fragment() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-<<<<<<< Updated upstream
                     // Save the token for future authenticated requests
                     TokenManager(requireContext()).saveAccessToken(idToken)
 
-                    // Direct the user to the main app activity
-=======
-                    TokenManager(requireContext()).saveAccessToken(idToken)
->>>>>>> Stashed changes
                     val mainIntent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(mainIntent)
                 } else {
@@ -269,8 +262,4 @@ class LoginFragment : Fragment() {
             }
     }
 
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
