@@ -88,6 +88,7 @@ interface ApiService {
 
     @GET("transactions")
     fun transactions(): Call<TransactionListResponse>
+    abstract fun checkUserExists(email: String): Any
 
 
 }

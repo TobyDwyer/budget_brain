@@ -91,4 +91,29 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setupWithNavController(navController)
     }
+
+    public fun loginWithToken(){
+        ApiClient(TokenManager(this@MainActivity).getAccessToken()).apiService.user().enqueue(object : Callback<UserResponse> {
+            override fun onResponse(
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
+            ) {
+                if (response.isSuccessful) {
+                    Globals.SessionUser = response.body()?.user
+                } else {
+                    TokenManager(this@MainActivity).removeAccessToken()
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                Log.e("LoginWithToken", "Failed to fetch user details: ${t.message}")
+                TokenManager(this@MainActivity).removeAccessToken()
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+
+            }
+        })
+    }
+
+
 }
