@@ -1,7 +1,7 @@
 # Budget-Brain
 
 ## Created By
-St10019602 Toby Dwyer St10039352 Brandon Calits
+St10019602 Toby Dwyer St10039352 Brandon Calitz
 
 # BudgetBrain
 
